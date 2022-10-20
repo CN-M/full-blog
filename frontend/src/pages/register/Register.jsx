@@ -5,22 +5,27 @@ import "./register.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
     try {
-      const res = await axios.post("/auth/register", {
+      const res = await axios.post("/accounts/register", {
         username,
+        first_name,
+        last_name,
         email,
         password,
       });
       res.data && window.location.replace("/login");
     } catch (err) {
       setError(true);
+      console.log(err)
     }
   };
   return (
@@ -33,6 +38,20 @@ export default function Register() {
           className="registerInput"
           placeholder="Enter your username..."
           onChange={(e) => setUsername(e.target.value)}
+        />
+        <label>First Name</label>
+        <input
+          type="text"
+          className="registerInput"
+          placeholder="Enter your first name.."
+          onChange={(e) => setFirst_name(e.target.value)}
+        />
+        <label>Last Name</label>
+        <input
+          type="text"
+          className="registerInput"
+          placeholder="Enter your username..."
+          onChange={(e) => setLast_name(e.target.value)}
         />
         <label>Email</label>
         <input

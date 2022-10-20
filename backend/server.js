@@ -21,6 +21,7 @@ connectDB();
 // Import site routes
 const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
+const categoryRoute = require('./routes/categoryRoute');
 
 // Important middleware
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use(compression());
 
 // Site routes
 app.use('/posts', postRoute);
+app.use('/categories', categoryRoute);
 app.use('/accounts', userRoute);
 app.use('/', (req, res) => res.redirect('/posts'));
 

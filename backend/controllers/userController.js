@@ -24,11 +24,12 @@ exports.showUsers = async (req, res) => {
 // Register user // POST
 exports.registerUser = async (req, res) => {
   const {
-    firstName, lastName, email, password,
+    username, first_name, last_name, email, password,
   } = req.body;
 
   // Check if all fields are filled out
-  if (!firstName || !lastName || !email || !password) {
+  if (!username || !first_name || !last_name || !email || !password) {
+  // if (!email || !password || !username) {
     res.status(400);
     throw new Error('fill in all fields');
   }
@@ -43,16 +44,17 @@ exports.registerUser = async (req, res) => {
   // Hash password and create user account
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await User.create({
-    firstName,
-    lastName,
+    username,
+    first_name,
+    last_name,
     email,
     password: hashedPassword,
   });
 
   if (user) {
     res.status(201).json({
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       email,
       token: generateToken(user._id),
     });
@@ -76,8 +78,8 @@ exports.loginUser = async (req, res) => {
   const user = await User.findOne({ email });
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(201).json({
-      firstName: user.firstName,
-      lastName: user.lastName,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
       token: generateToken(user._id),
     });
