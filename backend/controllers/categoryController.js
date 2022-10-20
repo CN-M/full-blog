@@ -2,11 +2,11 @@
 const Category = require('../models/Category');
 
 // Display all categories // GET
-exports.showCategorys = async (req, res) => {
-  const categories = await Category.find();
+exports.showCategories = async (req, res) => {
+  const categories = await Category.find().sort({ name: 1 });
   if (categories.length < 1) {
     res.status(400);
-    throw new Error('No Categorys to display');
+    throw new Error('No Categories to display');
   } else {
     res.status(200).json(categories);
   }

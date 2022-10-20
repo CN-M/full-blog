@@ -25,7 +25,7 @@ const postRoute = require('./routes/postRoute');
 // Important middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(helmet());
+app.use(helmet());
 app.use(compression());
 
 // Site routes
