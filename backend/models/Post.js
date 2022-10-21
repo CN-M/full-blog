@@ -13,14 +13,13 @@ const PostSchema = new Schema(
     },
     image: {
       type: String,
-    //   required: true,
     },
-    user: {
+    username: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'User',
     },
-    category: [{
+    categories: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'Category',

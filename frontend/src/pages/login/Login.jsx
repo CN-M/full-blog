@@ -14,7 +14,7 @@ export default function Login() {
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post("/auth/login", {
-        username: userRef.current.value,
+        email: userRef.current.value,
         password: passwordRef.current.value,
       });
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
@@ -31,7 +31,7 @@ export default function Login() {
         <input
           type="text"
           className="loginInput"
-          placeholder="Enter your username..."
+          placeholder="Enter your email..."
           ref={userRef}
         />
         <label>Password</label>

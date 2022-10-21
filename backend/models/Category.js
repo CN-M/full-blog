@@ -13,7 +13,7 @@ const CategorySchema = new Schema(
 
 CategorySchema.virtual('url').get(
   function() {
-    return `${this.name}`;
+    return `/categories/${this.name}`;
   },
 );
 

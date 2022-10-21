@@ -1,9 +1,11 @@
 // Import Post model
 const Post = require('../models/Post');
+const User = require('../models/User');
+const Category = require('../models/Category');
 
 // Display all posts // GET
 exports.showPosts = async (req, res) => {
-  const posts = await Post.find();
+  const posts = await Post.find().populate('username');
   if (posts.length < 1) {
     res.status(400);
     throw new Error('No Posts to display');
@@ -16,7 +18,7 @@ exports.showPosts = async (req, res) => {
 exports.showOnePost = async (req, res) => {
   const { id } = req.params;
   try {
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate('Category');
     if (post) return res.status(200).json(post);
   } catch (error) {
     res.status(400);
@@ -26,14 +28,24 @@ exports.showOnePost = async (req, res) => {
 
 // Create Post // POST
 exports.createPost = async (req, res) => {
-  const { name, username } = req.body;
+  const {
+    username, title, content, categories,
+  } = req.body;
 
   // Check if all fields are filled out
-  if (!name || !username) {
+  if (!title || !username || !content) {
     res.status(400);
     throw new Error('fill in all fields');
   } else {
-    const post = await Post.create({ name, username });
+    const user = await User.findOne({ username });
+    const category = await Category.find({ name: categories });
+
+    const post = await Post.create({
+      title,
+      username: user.id,
+      category: category[0].id,
+      content,
+    });
     res.status(200).json(post);
   }
 };

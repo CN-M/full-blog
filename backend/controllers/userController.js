@@ -15,7 +15,7 @@ exports.showUsers = async (req, res) => {
   const users = await User.find();
   if (users.length < 1) {
     res.status(400);
-    throw new Error('No Goals to display');
+    throw new Error('No Users to display');
   } else {
     res.status(200).json(users);
   }

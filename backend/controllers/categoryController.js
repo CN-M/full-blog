@@ -1,5 +1,6 @@
 // Import Category model
 const Category = require('../models/Category');
+const Post = require('../models/Post');
 
 // Display all categories // GET
 exports.showCategories = async (req, res) => {
@@ -14,9 +15,12 @@ exports.showCategories = async (req, res) => {
 
 // Display specific category // GET
 exports.showOneCategory = async (req, res) => {
-  const { id } = req.params;
+  const { categoryName } = req.params;
   try {
-    const category = await Category.findById(id);
+    const category = await Category.find({ name: categoryName }).sort({ name: 1 });
+
+    const categoryPosts = await Post.find({ category: categoryName });
+
     if (category) return res.status(200).json(category);
   } catch (error) {
     res.status(400);
@@ -38,13 +42,14 @@ exports.createCategory = async (req, res) => {
   }
 };
 
-// Update Category // PUT
+// Update Category // PUT // ADMIN ONLY
 exports.updateCategory = async (req, res) => {
-  const { id } = req.params;
+  const { categoryName } = req.params;
   const { name } = req.body;
   try {
-    const category = await Category.findById(id);
+    const category = await Category.find({ name: categoryName });
     if (category) {
+      const id = category.id;
       const updatedCategory = await Category.findByIdAndUpdate(id, { name }, { new: true });
       res.status(200).json(updatedCategory);
     }
@@ -56,13 +61,13 @@ exports.updateCategory = async (req, res) => {
 
 // Delete Category // DELETE
 exports.deleteCategory = async (req, res) => {
-  const { id } = req.params;
-  const category = await Category.findById(id);
+  const { categoryName } = req.params;
+  const category = await Category.find({ name: categoryName });
   if (!category) {
     res.status(400);
     throw new Error('Category not found');
   } else {
-    res.status(200).json(`Category ${category.name} deleted`);
+    res.status(200).json(`Category '${categoryName}' deleted`);
     await category.remove();
   }
 };

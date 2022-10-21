@@ -12,7 +12,7 @@ export default function SinglePost() {
   const PF = "http://localhost:5000/images/";
   const { user } = useContext(Context);
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [content, setContent] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function SinglePost() {
       const res = await axios.get("/posts/" + path);
       setPost(res.data);
       setTitle(res.data.title);
-      setDesc(res.data.desc);
+      setContent(res.data.content);
     };
     getPost();
   }, [path]);
@@ -39,7 +39,7 @@ export default function SinglePost() {
       await axios.put(`/posts/${post._id}`, {
         username: user.username,
         title,
-        desc,
+        content,
       });
       setUpdateMode(false)
     } catch (err) {}
@@ -90,11 +90,11 @@ export default function SinglePost() {
         {updateMode ? (
           <textarea
             className="singlePostDescInput"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
           />
         ) : (
-          <p className="singlePostDesc">{desc}</p>
+          <p className="singlePostDesc">{content}</p>
         )}
         {updateMode && (
           <button className="singlePostButton" onClick={handleUpdate}>

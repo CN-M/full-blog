@@ -12,7 +12,7 @@ router.route('/')
   .get(showCategories)
   .post(createCategory);
 
-router.route('/:id')
+router.route('/:categoryName')
   .get(showOneCategory)
   .put(updateCategory)
   .delete(deleteCategory);

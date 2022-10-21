@@ -5,16 +5,23 @@ import { Context } from "../../context/Context";
 
 export default function Write() {
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [content, setContent] = useState("");
+  // const [categories, setCategories] = useState([]);
   const [file, setFile] = useState(null);
   const { user } = useContext(Context);
+
+  // const getCategories = async () => {
+  //   const res = await axios.get('/categories')
+  //   if (categories) return res.status(200).json(res.data)
+  // } 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
       username: user.username,
       title,
-      desc,
+      content,
+      // categories,
     };
     if (file) {
       const data =new FormData();
@@ -52,7 +59,7 @@ export default function Write() {
             placeholder="Title"
             className="writeInput"
             autoFocus={true}
-            onChange={e=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="writeFormGroup">
@@ -60,7 +67,7 @@ export default function Write() {
             placeholder="Tell your story..."
             type="text"
             className="writeInput writeText"
-            onChange={e=>setDesc(e.target.value)}
+            onChange={(e) => setContent(e.target.value)}
           ></textarea>
         </div>
         <button className="writeSubmit" type="submit">

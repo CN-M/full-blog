@@ -12,7 +12,7 @@ router.route('/')
   .get(showPosts)
   .post(createPost);
 
-router.route('/:id')
+router.route('/:slug')
   .get(showOnePost)
   .put(updatePost)
   .delete(deletePost);
