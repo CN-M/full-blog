@@ -7,6 +7,10 @@ const PostSchema = new Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
       required: true,
@@ -19,19 +23,18 @@ const PostSchema = new Schema(
       required: true,
       ref: 'User',
     },
-    categories: [{
+    category: [{
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'Category',
     }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   },
   { timestamps: true },
 );
 
-PostSchema.virtual('url').get(
-  function() {
-    return `${this.name}`;
-  },
-);
+PostSchema.virtual('url').get(function() {
+  return `/posts/${this.slug}`;
+});
 
 module.exports = mongoose.model('Post', PostSchema);

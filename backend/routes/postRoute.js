@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const {
+  showAllPosts,
   showPosts,
   showOnePost,
   createPost,
@@ -8,13 +9,18 @@ const {
   deletePost,
 } = require('../controllers/postController');
 
+const { guard, protect } = require('../middleware/authMiddleware');
+
 router.route('/')
-  .get(showPosts)
-  .post(createPost);
+  .get(protect, showPosts)
+  .post(protect, createPost);
+
+router.route('/all/posts')
+  .get(showAllPosts);
 
 router.route('/:slug')
   .get(showOnePost)
-  .put(updatePost)
-  .delete(deletePost);
+  .put(guard, updatePost)
+  .delete(guard, deletePost);
 
 module.exports = router;

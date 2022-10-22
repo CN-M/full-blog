@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const { SECRET_ROLE } = process.env;
+
 const UserSchema = new Schema(
   {
     username: {
       type: String,
+      required: true,
+      unique: true,
     },
     first_name: {
       type: String,
@@ -24,6 +28,12 @@ const UserSchema = new Schema(
     profilePic: {
       type: String,
       default: '',
+    },
+    role: {
+      type: String,
+      required: true,
+      enum: [SECRET_ROLE, 'Writer', 'Editor', 'Reader'],
+      default: 'Reader',
     },
   },
   { timestamps: true },

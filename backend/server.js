@@ -33,7 +33,7 @@ app.use(compression());
 app.use('/posts', postRoute);
 app.use('/categories', categoryRoute);
 app.use('/accounts', userRoute);
-app.use('/', (req, res) => res.redirect('/posts'));
+// app.use('/', (req, res) => res.redirect('/posts'));
 
 // Catch error 404 and forward to error handler
 app.use((req, res, next) => next(createError(404)));

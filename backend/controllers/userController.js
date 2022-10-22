@@ -5,14 +5,21 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // Import JWT secret
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, SECRET_NAME, SECRET_ROLE } = process.env;
 
 // Generate JWT
-const generateToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: '60d' });
+const generateToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: '30d' });
 
 // Display all users // GET // ADMIN ONLY
 exports.showUsers = async (req, res) => {
+  const { role, username } = req.user;
   const users = await User.find();
+
+  if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
+    res.status(401);
+    throw new Error('Not authorized');
+  }
+
   if (users.length < 1) {
     res.status(400);
     throw new Error('No Users to display');
@@ -24,11 +31,13 @@ exports.showUsers = async (req, res) => {
 // Register user // POST
 exports.registerUser = async (req, res) => {
   const {
-    username, first_name, last_name, email, password,
+    first_name, last_name, email, password, role,
   } = req.body;
 
+  const username = req.body.username.toLowerCase();
+
   // Check if all fields are filled out
-  if (!username || !first_name || !last_name || !email || !password) {
+  if (!username || !email || !password) {
   // if (!email || !password || !username) {
     res.status(400);
     throw new Error('fill in all fields');
@@ -53,9 +62,11 @@ exports.registerUser = async (req, res) => {
 
   if (user) {
     res.status(201).json({
+      username,
       first_name,
       last_name,
       email,
+      role: user.role,
       token: generateToken(user._id),
     });
   } else {
@@ -66,18 +77,21 @@ exports.registerUser = async (req, res) => {
 
 // Loign user // POST
 exports.loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { password } = req.body;
+
+  const username = req.body.username.toLowerCase();
 
   // Check if all fields are filled out
-  if (!email || !password) {
+  if (!username || !password) {
     res.status(400);
     throw new Error('fill in all fields');
   }
 
   // Log user in
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ username });
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(201).json({
+      username: user.username,
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
@@ -91,13 +105,20 @@ exports.loginUser = async (req, res) => {
 
 // Delete Goal // DELETE // ADMIN ONLY
 exports.deleteUser = async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
+  const { role, username } = req.user;
+  const { userid } = req.params;
+
+  const user = await User.findById(userid);
+  if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
+    res.status(401);
+    throw new Error('Not authorized');
+  }
+
   if (!user) {
     res.status(400);
     throw new Error('User not found');
   } else {
-    res.status(200).json(`User ${user.name} deleted`);
-    await user.remove();
+    res.status(200).json(`User ${user.username} deleted`);
+    await user.deleteOne();
   }
 };

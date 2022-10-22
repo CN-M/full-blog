@@ -8,13 +8,15 @@ const {
   deleteCategory,
 } = require('../controllers/categoryController');
 
+const { guard } = require('../middleware/authMiddleware');
+
 router.route('/')
   .get(showCategories)
-  .post(createCategory);
+  .post(guard, createCategory);
 
 router.route('/:categoryName')
   .get(showOneCategory)
-  .put(updateCategory)
-  .delete(deleteCategory);
+  .put(guard, updateCategory)
+  .delete(guard, deleteCategory);
 
 module.exports = router;
