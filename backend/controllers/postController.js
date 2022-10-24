@@ -1,4 +1,3 @@
-/* eslint-disable quote-props */
 const slugify = require('slugify');
 
 // Import Post model
@@ -9,7 +8,10 @@ const Category = require('../models/Category');
 // Display ALL posts // GET // ADMIN ONLY
 exports.showAllPosts = async (req, res) => {
   // Find ALL user posts
-  const posts = await Post.find({}, '-content').populate('username', 'username email').populate('category', 'name');
+  const posts = await Post.find({}, '-content')
+    .populate('username', 'username email')
+    .populate('category', 'name')
+    .populate('comment', 'username text');
   if (posts.length < 1) {
     res.status(400);
     throw new Error('No Posts to display');
@@ -20,17 +22,10 @@ exports.showAllPosts = async (req, res) => {
 
 // Display all user posts // GET // ADMIN ONLY
 exports.showPosts = async (req, res) => {
-  const { id } = req.user;
-
-  // Check if user is logged in
-  if (!id) {
-    res.status(400);
-    throw new Error('User not logged in');
-  }
-
-  // Find user posts
-  const posts = await Post.find({ user: id }, '-content').populate('username', 'username email').populate('category', 'name');
-  // const posts = await Post.find({ user: id }, '-content').populate('category');
+  const posts = await Post.find({}, '-content')
+    .populate('username', 'username email')
+    .populate('category', 'name')
+    .populate('comment', 'username text');
   if (posts.length < 1) {
     res.status(400);
     throw new Error('No Posts to display');
@@ -45,11 +40,21 @@ exports.showPostsPerCategory = async (req, res) => {
 
 // Display specific post // GET
 exports.showOnePost = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const post = await Post.findById(id).populate('category');
-    if (post) return res.status(200).json(post);
-  } catch (error) {
+  const { slug } = req.params;
+  const post = await Post.findOne({ slug })
+    .populate('category')
+    .populate({
+      path: 'comment',
+      select: 'text',
+      populate: {
+        path: 'username',
+        select: 'username email',
+      },
+    });
+
+  if (post) {
+    return res.status(200).json(post);
+  } else {
     res.status(400);
     throw new Error('Post not found');
   }
@@ -99,16 +104,13 @@ exports.createPost = async (req, res) => {
 exports.updatePost = async (req, res) => {
   const { id } = req.params;
   const { name, username } = req.body;
-  try {
-    const post = await Post.findById(id);
-    if (post) {
-      const updatedPost = await Post.findByIdAndUpdate(id, { name, username }, { new: true });
-      res.status(200).json(updatedPost);
-    }
-  } catch (error) {
-    res.status(400);
-    throw new Error('Post not found');
+  const post = await Post.findById(id);
+  if (post) {
+    const updatedPost = await Post.findByIdAndUpdate(id, { name, username }, { new: true });
+    res.status(200).json(updatedPost);
   }
+  res.status(400);
+  throw new Error('Post not found');
 };
 
 // Delete Post // DELETE

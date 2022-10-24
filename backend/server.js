@@ -22,6 +22,7 @@ connectDB();
 const userRoute = require('./routes/userRoute');
 const postRoute = require('./routes/postRoute');
 const categoryRoute = require('./routes/categoryRoute');
+// const commentRoute = require('./routes/commentRoute');
 
 // Important middleware
 app.use(express.json());
@@ -30,9 +31,10 @@ app.use(helmet());
 app.use(compression());
 
 // Site routes
-app.use('/posts', postRoute);
-app.use('/categories', categoryRoute);
 app.use('/accounts', userRoute);
+app.use('/categories', categoryRoute);
+app.use('/posts', postRoute);
+// app.use('/posts/:slug/comments', commentRoute);
 // app.use('/', (req, res) => res.redirect('/posts'));
 
 // Catch error 404 and forward to error handler

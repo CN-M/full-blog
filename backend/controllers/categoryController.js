@@ -1,6 +1,6 @@
 const slugify = require('slugify');
 
-// Import Category model
+// Import models
 const Category = require('../models/Category');
 const Post = require('../models/Post');
 
@@ -23,13 +23,14 @@ exports.showOneCategory = async (req, res) => {
   const { categoryName } = req.params;
 
   const category = await Category.findOne({ name: categoryName }).sort({ name: 1 });
-  const categoryPosts = await Post.find({ category: category.id }, '-content').populate('category', 'name');
 
-  if (!category && !categoryPosts) {
+  // Check if category exists
+  if (!category) {
     res.status(400);
     throw new Error('Category not found');
   }
 
+  const categoryPosts = await Post.find({ category: category.id }, '-content').populate('category', 'name');
   if (category && categoryPosts) return res.status(200).json({ category, categoryPosts });
 };
 
@@ -65,26 +66,33 @@ exports.createCategory = async (req, res) => {
 
 // Update Category // PUT // ADMIN ONLY
 exports.updateCategory = async (req, res) => {
+  const { username, role } = req.user;
+  const name = req.body.name.toLowerCase();
   const categoryName = req.params.categoryName.toLowerCase();
-  const { name } = req.body;
 
-  const category = await Category.find({ name: categoryName });
-  if (category) {
-    const id = category.id;
-    const updatedCategory = await Category.findByIdAndUpdate(id, { name }, { new: true });
-    res.status(200).json(updatedCategory);
+  if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
+    res.status(401);
+    throw new Error('Not authorized');
   }
 
-  res.status(400);
-  throw new Error('Category not found');
+  // generate slug
+  const sluggedName = slugify(name, { remove: /[*+~.()'"!:@]/g, lower: true });
+
+  const category = await Category.findOne({ name: categoryName });
+  if (category) {
+    const id = category.id;
+    const updatedCategory = await Category.findByIdAndUpdate(id, { name: sluggedName }, { new: true });
+    res.status(200).json(updatedCategory);
+  } else {
+    res.status(400);
+    throw new Error('Category not found');
+  }
 };
 
 // Delete Category // DELETE
 exports.deleteCategory = async (req, res) => {
   const { username, role } = req.user;
-  // const categoryName = req.params.categoryName.toLowerCase();
-  console.log(req.user);
-  const { categoryName } = req.params;
+  const categoryName = req.params.categoryName.toLowerCase();
 
   if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
     res.status(401);
@@ -92,13 +100,11 @@ exports.deleteCategory = async (req, res) => {
   }
 
   const category = await Category.findOne({ name: categoryName });
-  if (!category) {
-    res.status(400);
-    throw new Error('Category not found');
-  }
-
   if (category) {
     res.status(200).json(`Category '${category.name}' deleted`);
     await category.deleteOne();
+  } else {
+    res.status(400);
+    throw new Error('Category not found');
   }
 };
