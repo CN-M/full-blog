@@ -17,10 +17,4 @@ const ReplySchema = new Schema(
   { timestamps: true },
 );
 
-ReplySchema.virtual('url').get(
-  function() {
-    return `/categories/${this.name}`;
-  },
-);
-
 module.exports = mongoose.model('Reply', ReplySchema);

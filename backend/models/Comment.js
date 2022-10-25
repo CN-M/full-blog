@@ -18,10 +18,4 @@ const CommentSchema = new Schema(
   { timestamps: true },
 );
 
-CommentSchema.virtual('url').get(
-  function() {
-    return `/categories/${this.name}`;
-  },
-);
-
 module.exports = mongoose.model('Comment', CommentSchema);
