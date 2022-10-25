@@ -2,7 +2,7 @@ import './Footer.scss';
 
 const Footer = () => (
   <footer>
-    <div className="footer">
+    <div className="footer-content">
       <div className="left-side">
         <h3>Content</h3>
       </div>
@@ -14,7 +14,9 @@ const Footer = () => (
       </div>
     </div>
 
-    <h2>%copy; 2022 C.N.M.</h2>
+    <div className="copyright">
+      <h2>&copy; 2022 C.N.M.</h2>
+    </div>
   </footer>
 );
 

@@ -2,7 +2,9 @@ import './Home.scss';
 
 function Home() {
   return (
-    <div>Home</div>
+    <div className="container">
+      <h1>Welcome to the blog</h1>
+    </div>
   );
 }
 
