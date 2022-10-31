@@ -12,6 +12,7 @@ function Nav() {
         <li><a href="/">Home</a></li>
         <li><a href="/">About</a></li>
         <li><a href="/">Home</a></li>
+        <li><a href="/write">Write</a></li>
         {/* </ul> */}
       </div>
       <div className="right-side">
