@@ -9,7 +9,7 @@ const { SECRET_NAME, SECRET_ROLE } = process.env;
 
 // Display all categories // GET
 exports.showCategories = async (req, res) => {
-  const categories = await Category.find().sort({ name: 1 });
+  const categories = await Category.find({}, 'name -_id').sort({ name: 1 });
   if (categories.length < 1) {
     res.status(400);
     throw new Error('No Categories to display');
@@ -22,7 +22,7 @@ exports.showCategories = async (req, res) => {
 exports.showOneCategory = async (req, res) => {
   const { categoryName } = req.params;
 
-  const category = await Category.findOne({ name: categoryName }).sort({ name: 1 });
+  const category = await Category.findOne({ name: categoryName }, 'name -_id').sort({ name: 1 });
 
   // Check if category exists
   if (!category) {
@@ -30,7 +30,7 @@ exports.showOneCategory = async (req, res) => {
     throw new Error('Category not found');
   }
 
-  const categoryPosts = await Post.find({ category: category.id }, '-content').populate('category', 'name');
+  const categoryPosts = await Post.find({ category: category.id }).populate('category', 'name -_id');
   if (category && categoryPosts) return res.status(200).json({ category, categoryPosts });
 };
 
@@ -66,22 +66,15 @@ exports.createCategory = async (req, res) => {
 
 // Update Category // PUT // ADMIN ONLY
 exports.updateCategory = async (req, res) => {
-  const { username, role } = req.user;
   const name = req.body.name.toLowerCase();
   const categoryName = req.params.categoryName.toLowerCase();
-
-  if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
-    res.status(401);
-    throw new Error('Not authorized');
-  }
 
   // generate slug
   const sluggedName = slugify(name, { remove: /[*+~.()'"!:@]/g, lower: true });
 
   const category = await Category.findOne({ name: categoryName });
   if (category) {
-    const id = category.id;
-    const updatedCategory = await Category.findByIdAndUpdate(id, { name: sluggedName }, { new: true });
+    const updatedCategory = await Category.findByIdAndUpdate(category.id, { name: sluggedName }, { new: true });
     res.status(200).json(updatedCategory);
   } else {
     res.status(400);
@@ -91,13 +84,7 @@ exports.updateCategory = async (req, res) => {
 
 // Delete Category // DELETE
 exports.deleteCategory = async (req, res) => {
-  const { username, role } = req.user;
   const categoryName = req.params.categoryName.toLowerCase();
-
-  if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
-    res.status(401);
-    throw new Error('Not authorized');
-  }
 
   const category = await Category.findOne({ name: categoryName });
   if (category) {

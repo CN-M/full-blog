@@ -3,6 +3,7 @@ const { DB_URI } = process.env;
 
 exports.connectDB = async () => {
   try {
+    mongoose.set('strictQuery', false);
     const db = await mongoose.connect(DB_URI);
     console.log(`DB Connected: ${db.connection.host}`.magenta.underline);
   } catch (error) {

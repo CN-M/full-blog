@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Import JWT secret
+// Import Secrets
 const { JWT_SECRET, SECRET_NAME, SECRET_ROLE } = process.env;
 
 exports.protect = async (req, res, next) => {
@@ -17,11 +17,10 @@ exports.protect = async (req, res, next) => {
       const decoded = jwt.verify(token, JWT_SECRET);
 
       // Get user from token
-      req.user = await User.findById(decoded.id).select('-password');
+      req.user = await User.findById(decoded.id).select('username email first_name last_name -_id');
 
       next();
     } catch (error) {
-      console.log(error);
       res.status(401);
       throw new Error('Not Authorized');
     }
@@ -46,16 +45,16 @@ exports.guard = async (req, res, next) => {
       const decoded = jwt.verify(token, JWT_SECRET);
 
       // Get user from token
-      req.user = await User.findById(decoded.id).select('-password');
+      req.user = await User.findById(decoded.id).select('username email first_name last_name -_id');
       if ((req.user.username !== SECRET_NAME) && (req.user.role !== SECRET_ROLE)) {
         res.status(401);
-        throw new Error('Not Authorized, Bitch');
+        throw new Error('Not Authorized Perform Task');
       }
 
       next();
     } catch (error) {
       res.status(401);
-      throw new Error('Not Authorized');
+      throw new Error('Not Authorized Perform Task');
     }
   }
 

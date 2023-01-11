@@ -12,13 +12,7 @@ const generateToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: '30d' })
 
 // Display all users // GET // ADMIN ONLY
 exports.showUsers = async (req, res) => {
-  const { role, username } = req.user;
-  const users = await User.find();
-
-  if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
-    res.status(401);
-    throw new Error('Not authorized');
-  }
+  const users = await User.find({}, 'username email first_name last_name -_id');
 
   if (users.length < 1) {
     res.status(400);
@@ -28,26 +22,47 @@ exports.showUsers = async (req, res) => {
   }
 };
 
+// Show Single User // GET // ADMIN ONLY
+exports.showSingleUser = async (req, res) => {
+  const { username } = req.params;
+
+  const user = await User.findOne({ username }, 'first_name last_name username email -_id');
+
+  if (!user) {
+    res.status(400);
+    throw new Error('User not found');
+  } else {
+    res.status(200).json(user);
+  }
+};
+
 // Register user // POST
 exports.registerUser = async (req, res) => {
   const {
-    first_name, last_name, email, password, role,
+    first_name, last_name, password, role,
   } = req.body;
 
   const username = req.body.username.toLowerCase();
+  const email = req.body.email.toLowerCase();
 
   // Check if all fields are filled out
   if (!username || !email || !password) {
-  // if (!email || !password || !username) {
     res.status(400);
     throw new Error('fill in all fields');
   }
 
-  // Check if email already has account
-  const userExists = await User.findOne({ email });
-  if (userExists) {
+  // Check if Email already has account
+  const userEmailTaken = await User.findOne({ email });
+  if (userEmailTaken) {
     res.status(400);
     throw new Error('Email already registered');
+  }
+
+  // Check if Username already taken
+  const usernameTaken = await User.findOne({ username });
+  if (usernameTaken) {
+    res.status(400);
+    throw new Error('Username already taken');
   }
 
   // Hash password and create user account
@@ -57,6 +72,7 @@ exports.registerUser = async (req, res) => {
     first_name,
     last_name,
     email,
+    role,
     password: hashedPassword,
   });
 
@@ -66,7 +82,6 @@ exports.registerUser = async (req, res) => {
       first_name,
       last_name,
       email,
-      role: user.role,
       token: generateToken(user._id),
     });
   } else {
@@ -103,22 +118,54 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// Delete Goal // DELETE // ADMIN ONLY
-exports.deleteUser = async (req, res) => {
-  const { role, username } = req.user;
-  const { userid } = req.params;
+// Update User info // PUT // ADMIN ONLY
+// exports.updateUser = async (req, res) => {
+//   const { account } = req.params;
+//   const { username } = req.user;
+//   const { first_name, last_name, email } = req.body;
 
-  const user = await User.findById(userid);
-  if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
-    res.status(401);
-    throw new Error('Not authorized');
+//   const user = await User.findOne({ username: account });
+//   console.log(user.id);
+
+//   if (user) {
+//     const updatedUser = await User.findByIdAndUpdate(user.id, {
+//       first_name, last_name,
+//     }, { new: true });
+//     res.status(200).json(updatedUser);
+//   } else {
+//     res.status(400);
+//     throw new Error('User not found');
+//   }
+// };
+
+// Update Category // PUT // ADMIN ONLY
+// exports.updateCategory = async (req, res) => {
+exports.updateUser = async (req, res) => {
+  const { account } = req.params;
+  const { firstName, lastName } = req.body;
+
+  const user = await User.findOne({ username: account });
+
+  if (user) {
+    const updatedUser = await User.findByIdAndUpdate(user.id, { first_name: firstName, last_name: lastName }, { new: true });
+    res.status(200).json(updatedUser);
+  } else {
+    res.status(400);
+    throw new Error('User not found');
   }
+};
+
+// Delete User // DELETE // ADMIN ONLY
+exports.deleteUser = async (req, res) => {
+  const { account } = req.params;
+
+  const user = await User.findOne({ username: account });
 
   if (!user) {
     res.status(400);
     throw new Error('User not found');
   } else {
-    res.status(200).json(`User ${user.username} deleted`);
+    res.status(200).json(`User '${user.username}' deleted`);
     await user.deleteOne();
   }
 };

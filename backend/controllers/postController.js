@@ -5,26 +5,12 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const Category = require('../models/Category');
 
-// Display ALL posts // GET // ADMIN ONLY
-exports.showAllPosts = async (req, res) => {
-  // Find ALL user posts
-  const posts = await Post.find({}, '-content')
-    .populate('username', 'username email')
-    .populate('category', 'name')
-    .populate('comment', 'username text');
-  if (posts.length < 1) {
-    res.status(400);
-    throw new Error('No Posts to display');
-  } else {
-    res.status(200).json(posts);
-  }
-};
-
-// Display all user posts // GET // ADMIN ONLY
+// Display ALL posts // GET
 exports.showPosts = async (req, res) => {
-  const posts = await Post.find({}, '-content')
-    .populate('username', 'username email')
-    .populate('category', 'name')
+  // Find ALL posts
+  const posts = await Post.find({}, '-_id -updatedAt -__v')
+    .populate('username', 'first_name last_name username email -_id')
+    .populate('category', 'name -_id')
     .populate('comment', 'username text');
   if (posts.length < 1) {
     res.status(400);
@@ -34,15 +20,47 @@ exports.showPosts = async (req, res) => {
   }
 };
 
+// Display all user posts // GET
+exports.showUserPosts = async (req, res) => {
+  const { user } = req.params;
+
+  const author = await User.findOne({ username: user });
+
+  const posts = await Post.find({ username: author.id }, '-_id -updatedAt -__v')
+    .populate('username', 'username email -_id')
+    .populate('category', 'name -_id')
+    .populate('comment', 'username text -_id');
+  if (posts.length < 1) {
+    res.status(400);
+    throw new Error('No Posts to display');
+  } else {
+    res.status(200).json(posts);
+  }
+};
+
+// Display all user posts // GET
 exports.showPostsPerCategory = async (req, res) => {
-  res.status(200).send('Show all posts per category');
+  const { category } = req.params;
+
+  const postCategory = await Category.findOne({ name: category });
+
+  const posts = await Post.find({ category: postCategory.id }, '-_id -updatedAt -__v')
+    .populate('category', 'name -_id')
+    .populate('comment', 'username text -_id');
+  if (posts.length < 1) {
+    res.status(400);
+    throw new Error('No Posts to display');
+  } else {
+    res.status(200).json(posts);
+  }
 };
 
 // Display specific post // GET
 exports.showOnePost = async (req, res) => {
   const { slug } = req.params;
-  const post = await Post.findOne({ slug })
-    .populate('category')
+  const post = await Post.findOne({ slug }, '-_id -updatedAt -__v')
+    .populate('category', 'name -_id')
+    .populate('username', 'username email -_id')
     .populate({
       path: 'comment',
       select: 'text',
@@ -63,8 +81,10 @@ exports.showOnePost = async (req, res) => {
 // Create Post // POST
 exports.createPost = async (req, res) => {
   const {
-    username, title, content, category,
+    title, content, category,
   } = req.body;
+
+  const { username } = req.user;
 
   // Check if all fields are filled out
   if (!title || !username || !content || !category) {
@@ -102,11 +122,16 @@ exports.createPost = async (req, res) => {
 
 // Update Post // PUT
 exports.updatePost = async (req, res) => {
-  const { id } = req.params;
-  const { name, username } = req.body;
-  const post = await Post.findById(id);
+  const { slug } = req.params;
+  const { username } = req.user;
+  const { title, content, categories } = req.body;
+
+  const post = await Post.findOne({ slug });
+
   if (post) {
-    const updatedPost = await Post.findByIdAndUpdate(id, { name, username }, { new: true });
+    const updatedPost = await Post.findByIdAndUpdate(post.id, {
+      title, content, categories, username,
+    }, { new: true });
     res.status(200).json(updatedPost);
   }
   res.status(400);
@@ -115,13 +140,14 @@ exports.updatePost = async (req, res) => {
 
 // Delete Post // DELETE
 exports.deletePost = async (req, res) => {
-  const { id } = req.params;
-  const post = await Post.findById(id);
+  const { slug } = req.params;
+  const post = await Post.findOne({ slug });
+
   if (!post) {
     res.status(400);
     throw new Error('Post not found');
   } else {
-    res.status(200).json(`Post ${post.name} deleted`);
+    res.status(200).json(`Post '${post.title}' deleted`);
     await post.deleteOne();
   }
 };

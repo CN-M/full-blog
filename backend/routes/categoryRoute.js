@@ -14,6 +14,11 @@ router.route('/')
   .get(showCategories)
   .post(guard, createCategory);
 
+// router.route('/:/all')
+// router.route('/:categoryName')
+
+//   .get(showUserPosts);
+
 router.route('/:categoryName')
   .get(showOneCategory)
   .put(guard, updateCategory)

@@ -1,7 +1,8 @@
 const router = require('express').Router();
 
 const {
-  showAllPosts,
+  showUserPosts,
+  showPostsPerCategory,
   showPosts,
   showOnePost,
   createPost,
@@ -26,11 +27,14 @@ const {
 const { guard, protect } = require('../middleware/authMiddleware');
 
 router.route('/')
-  .get(protect, showPosts)
+  .get(showPosts)
   .post(protect, createPost);
 
-router.route('/all/posts')
-  .get(showAllPosts);
+router.route('/:user/all')
+  .get(showUserPosts);
+
+router.route('/:category/posts')
+  .get(showPostsPerCategory);
 
 router.route('/:slug')
   .get(showOnePost)
