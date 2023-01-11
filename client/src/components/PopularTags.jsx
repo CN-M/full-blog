@@ -49,7 +49,7 @@ const PopularTags = ({ categoryData }) => (
 
         {
                 categoryData.map((object, i) => (
-                  <TagButton category={object} key={i} />
+                  <TagButton category={object} key={object._id} />
                 ))
               }
 
@@ -74,46 +74,6 @@ const PopularTags = ({ categoryData }) => (
             <img src={tag_5} width="32" height="32" loading="lazy" alt="Food" />
 
             <p className="btn-text">Food</p>
-          </button>
-        </li>
-
-        <li>
-          <button className="card tag-btn">
-            <img src={tag_6} width="32" height="32" loading="lazy" alt="Space" />
-
-            <p className="btn-text">Space</p>
-          </button>
-        </li>
-
-        <li>
-          <button className="card tag-btn">
-            <img src={tag_7} width="32" height="32" loading="lazy" alt="Animal" />
-
-            <p className="btn-text">Animal</p>
-          </button>
-        </li>
-
-        <li>
-          <button className="card tag-btn">
-            <img src={tag_8} width="32" height="32" loading="lazy" alt="Minimal" />
-
-            <p className="btn-text">Minimal</p>
-          </button>
-        </li>
-
-        <li>
-          <button className="card tag-btn">
-            <img src={tag_9} width="32" height="32" loading="lazy" alt="Interior" />
-
-            <p className="btn-text">Interior</p>
-          </button>
-        </li>
-
-        <li>
-          <button className="card tag-btn">
-            <img src={tag_10} width="32" height="32" loading="lazy" alt="Plant" />
-
-            <p className="btn-text">Plant</p>
           </button>
         </li>
 

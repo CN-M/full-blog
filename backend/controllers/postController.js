@@ -8,9 +8,9 @@ const Category = require('../models/Category');
 // Display ALL posts // GET
 exports.showPosts = async (req, res) => {
   // Find ALL posts
-  const posts = await Post.find({}, '-_id -updatedAt -__v')
-    .populate('username', 'first_name last_name username email -_id')
-    .populate('category', 'name -_id')
+  const posts = await Post.find({}, '-updatedAt -__v')
+    .populate('username', 'first_name last_name username email')
+    .populate('category', 'name')
     .populate('comment', 'username text');
   if (posts.length < 1) {
     res.status(400);
@@ -26,10 +26,10 @@ exports.showUserPosts = async (req, res) => {
 
   const author = await User.findOne({ username: user });
 
-  const posts = await Post.find({ username: author.id }, '-_id -updatedAt -__v')
-    .populate('username', 'username email -_id')
-    .populate('category', 'name -_id')
-    .populate('comment', 'username text -_id');
+  const posts = await Post.find({ username: author.id }, '-updatedAt -__v')
+    .populate('username', 'username email')
+    .populate('category', 'name')
+    .populate('comment', 'username text');
   if (posts.length < 1) {
     res.status(400);
     throw new Error('No Posts to display');
@@ -44,13 +44,11 @@ exports.showPostsPerCategory = async (req, res) => {
 
   const postCategory = await Category.findOne({ name: category });
 
-  const posts = await Post.find({ category: postCategory.id }, '-_id -updatedAt -__v')
-    .populate('category', 'name -_id')
-    .populate('comment', 'username text -_id');
-  if (posts.length < 1) {
-    res.status(400);
-    throw new Error('No Posts to display');
-  } else {
+  const posts = await Post.find({ category: postCategory.id }, '-updatedAt -__v')
+    .populate('category', 'name')
+    .populate('comment', 'username text');
+
+  if (posts) {
     res.status(200).json(posts);
   }
 };
@@ -58,9 +56,9 @@ exports.showPostsPerCategory = async (req, res) => {
 // Display specific post // GET
 exports.showOnePost = async (req, res) => {
   const { slug } = req.params;
-  const post = await Post.findOne({ slug }, '-_id -updatedAt -__v')
-    .populate('category', 'name -_id')
-    .populate('username', 'username email -_id')
+  const post = await Post.findOne({ slug }, '-updatedAt -__v')
+    .populate('category', 'name')
+    .populate('username', 'username email')
     .populate({
       path: 'comment',
       select: 'text',

@@ -96,7 +96,7 @@ const Topics = ({ categoryData }) => (
 
             {
                 categoryData.map((object, i) => (
-                  <SliderItem category={object} key={i} />
+                  <SliderItem category={object} key={object._id} />
                 ))
               }
 

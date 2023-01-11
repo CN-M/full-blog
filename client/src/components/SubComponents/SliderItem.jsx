@@ -23,9 +23,6 @@ const SliderItem = ({
   return (
     <li className="slider-item">
       <a href={`/categories/${name}`} className="slider-card">
-
-        {/* <figure className="slider-banner img-holder"
-     style={{ width: 507, height: 618 }}> */}
         <figure className="slider-banner img-holder">
           <img
             src={topic_3}
@@ -36,15 +33,9 @@ const SliderItem = ({
             className="img-cover"
           />
         </figure>
-
         <div className="slider-content">
           <span className="slider-title">{name}</span>
-
-          <p className="slider-subtitle">
-            {categoryData.length}
-            {' '}
-            Articles
-          </p>
+          <p className="slider-subtitle">{categoryData.length} Articles</p>
         </div>
 
       </a>

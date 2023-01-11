@@ -9,7 +9,7 @@ const { SECRET_NAME, SECRET_ROLE } = process.env;
 
 // Display all categories // GET
 exports.showCategories = async (req, res) => {
-  const categories = await Category.find({}, 'name -_id').sort({ name: 1 });
+  const categories = await Category.find({}, 'name').sort({ name: 1 });
   if (categories.length < 1) {
     res.status(400);
     throw new Error('No Categories to display');
@@ -22,7 +22,7 @@ exports.showCategories = async (req, res) => {
 exports.showOneCategory = async (req, res) => {
   const { categoryName } = req.params;
 
-  const category = await Category.findOne({ name: categoryName }, 'name -_id').sort({ name: 1 });
+  const category = await Category.findOne({ name: categoryName }, 'name').sort({ name: 1 });
 
   // Check if category exists
   if (!category) {
@@ -30,7 +30,7 @@ exports.showOneCategory = async (req, res) => {
     throw new Error('Category not found');
   }
 
-  const categoryPosts = await Post.find({ category: category.id }).populate('category', 'name -_id');
+  const categoryPosts = await Post.find({ category: category.id }).populate('category', 'name');
   if (category && categoryPosts) return res.status(200).json({ category, categoryPosts });
 };
 
