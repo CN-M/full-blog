@@ -4,9 +4,11 @@ import author_1 from '../../assets/images/author-1.png';
 
 const FeatureCard = ({
   post: {
-    title, category, slug, username: { username, first_name }, createdAt,
+    title, category, slug, username: { username, first_name }, createdAt, image,
   },
 }) => {
+  const imgPath = 'http://localhost:5000/images/Posts/Featured/';
+
   const postDate = new Date(createdAt);
   const datePosted = postDate.toUTCString().split(', ')[1].split(' ').slice(0, 3).join(' ');
   return (
@@ -14,7 +16,8 @@ const FeatureCard = ({
       <div className="card feature-card">
         <figure className="card-banner img-holder">
           <img
-            src={featured_1}
+            // src={featured_1}
+            src={image ? imgPath + image : featured_1}
             width="1602"
             height="903"
             loading="lazy"

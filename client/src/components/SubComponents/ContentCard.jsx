@@ -4,17 +4,20 @@ import recent_post_3 from '../../assets/images/recent-post-3.jpg';
 
 const ContentCard = ({
   post: {
-    title, category, slug, username: { username, first_name }, createdAt, content, _id,
+    title, category, slug, username: { username, first_name }, createdAt, content, _id, image,
   },
 }) => {
+  const imgPath = 'http://localhost:5000/images/Posts/Featured/';
+
   const postDate = new Date(createdAt);
   const datePosted = postDate.toUTCString().split(', ')[1].split(' ').slice(0, 3).join(' ');
+
   return (
     <li>
       <div className="recent-post-card">
         <figure className="card-banner img-holder">
           <img
-            src={recent_post_3}
+            src={image ? imgPath + image : recent_post_3}
             width="271"
             height="258"
             loading="lazy"
@@ -23,7 +26,7 @@ const ContentCard = ({
           />
         </figure>
         <div className="card-content">
-          <a href={`/posts/${first_name || username}/all`} className="card-badge">{first_name || username}</a>
+          <a href={`/posts/${username}/all`} className="card-badge">{first_name || username}</a>
           <h3 className="headline headline-3 card-title">
             <a href={`/posts/${slug}`} className="link hover-2">{title}</a>
           </h3>

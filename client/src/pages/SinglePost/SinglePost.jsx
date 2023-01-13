@@ -5,30 +5,37 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 // import { Context } from '../../context/Context';
 import './SinglePost.scss';
 
 export default function SinglePost() {
-  const location = useLocation();
-  const path = location.pathname.split('/')[2];
-  const [post, setPost] = useState({});
-  const PF = 'http://localhost:5000/images/';
-  // const { user } = useContext(Context);
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  const path = window.location.pathname.split('/')[2];
+  const imgPath = 'http://localhost:5000/images/Posts/Featured/';
+
+  console.log(path);
+
   const [updateMode, setUpdateMode] = useState(false);
+  const [postData, setPostData] = useState([]);
 
   useEffect(() => {
-    const getPost = async () => {
-      const res = await axios.get(`http://localhost:5000/posts/${path}`);
-      setPost(res.data);
-      setTitle(res.data.title);
-      setDesc(res.data.desc);
+    const getPostData = async () => {
+      const response = await axios.get(`http://localhost:5000/posts/${path}`);
+      setPostData(response.data);
+      console.log(response.data);
     };
-    getPost();
-  }, [path]);
+
+    getPostData();
+  });
+
+  const {
+    title, category, slug, image,
+    username,
+    createdAt, content, _id,
+  } = postData;
+
+  const postDate = new Date(createdAt);
+  const datePosted = postDate.toUTCString().split(', ')[1].split(' ').slice(0, 3).join(' ');
 
   // const handleDelete = async () => {
   //   try {
@@ -53,60 +60,48 @@ export default function SinglePost() {
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        {post.image && (
-          <img src={PF + post.image} alt="" className="singlePostImg" />
-        )}
-        {updateMode ? (
-          <input
-            type="text"
-            value={title}
-            className="singlePostTitleInput"
-            autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        ) : (
-          <h1 className="singlePostTitle">
-            {title}
-            {post.username === true && (
-              <div className="singlePostEdit">
-                <i
-                  className="singlePostIcon far fa-edit"
-                  onClick={() => setUpdateMode(true)}
-                />
-                <i
-                  className="singlePostIcon far fa-trash-alt"
-                  // onClick={handleDelete}
-                />
-              </div>
-            )}
-          </h1>
-        )}
+        {
+        }
+
+        <input
+          type="text"
+          value={title}
+          className="singlePostTitleInput"
+          autoFocus
+        />
+        <h1 className="singlePostTitle">
+          {title}
+          <div className="singlePostEdit">
+            <i
+              className="singlePostIcon far fa-edit"
+              onClick={() => setUpdateMode(true)}
+            />
+            <i
+              className="singlePostIcon far fa-trash-alt"
+            />
+          </div>
+        </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
             Author:
-            <Link to={`/?user=${post.username}`} className="link">
-              <b> {post.username}</b>
+            <Link to={`/?user=${username}`} className="link">
+              <b> {first_name + last_name}</b>
             </Link>
           </span>
           <span className="singlePostDate">
-            {new Date(post.createdAt).toDateString()}
+            {datePosted}
           </span>
         </div>
-        {updateMode ? (
-          <textarea
-            className="singlePostDescInput"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
-        ) : (
-          <p className="singlePostDesc">{desc}</p>
-        )}
-        {updateMode && (
-          <button className="singlePostButton">
-            {/* <button className="singlePostButton" onClick={handleUpdate}> */}
-            Update
-          </button>
-        )}
+        <textarea
+          className="singlePostDescInput"
+          value={content}
+          // onChange={(e) => setDesc(e.target.value)}
+        />
+        <p className="singlePostDesc">{content}</p>
+        <button className="singlePostButton">
+          {/* <button className="singlePostButton" onClick={handleUpdate}> */}
+          Update
+        </button>
       </div>
     </div>
   );

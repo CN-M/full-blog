@@ -127,18 +127,20 @@ exports.updatePost = async (req, res) => {
   } = req.body;
 
   const post = await Post.findOne({ slug });
-  const categoryIds = [];
 
+  const categoryIds = [];
+  let newCategory = [];
   if (category) {
     const cat = category?.split(', ');
-    console.log(cat);
-
     const postCategory = await Category.find({ name: { $in: cat } });
     postCategory.forEach((category) => categoryIds.push(category.id));
+
+    newCategory = categoryIds;
+  } else {
+    newCategory = post.category;
   }
 
   let slugged;
-
   if (title) {
     // generate slug
     slugged = slugify(title, { remove: /[*+~.()'"!:@]/g, lower: true });
@@ -146,7 +148,7 @@ exports.updatePost = async (req, res) => {
 
   if (post) {
     const updatedPost = await Post.findByIdAndUpdate(post.id, {
-      title, content, category: categoryIds, image, slug: slugged,
+      title, content, category: newCategory, image, slug: slugged,
     }, { new: true });
     res.status(200).json(updatedPost);
   } else {
