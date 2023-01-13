@@ -15,11 +15,9 @@ router.route('/users')
   .get(guard, showUsers);
 // .get(protect, showUsers);
 
-router.route('/users/:account')
+router.route('/:account')
+  .get(showSingleUser)
   .delete(guard, deleteUser)
   .put(guard, updateUser);
-
-router.route('/users/:username')
-  .get(showSingleUser);
 
 module.exports = router;

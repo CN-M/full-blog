@@ -29,7 +29,7 @@ const FeaturedPost = ({ postData }) => (
 
       <ul className="feature-list">
         {
-            postData.slice(0, 6)?.map((object, i) => (
+            postData.slice(0, 5)?.map((object, i) => (
               <FeatureCard post={object} key={object._id} />
             ))
           }

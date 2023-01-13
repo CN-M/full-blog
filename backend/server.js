@@ -9,6 +9,17 @@ require('dotenv').config();
 require('express-async-errors');
 const multer = require('multer');
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'images');
+  },
+
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
 // Imporatant dependencies
 const { PORT, NODE_ENV } = process.env;
 const { errorHandler } = require('./middleware/errorMiddleware');
@@ -42,18 +53,10 @@ app.use('/posts', postRoute);
 // app.use('/posts/:slug/comments', commentRoute);
 // app.use('/', (req, res) => res.redirect('/posts'));
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'images');
-  },
-  filename: (req, file, cb) => {
-    cb(null, req.body.name);
-  },
-});
-
 const upload = multer({ storage });
-app.post('/api/upload', upload.single('file'), (req, res) => {
-  res.status(200).json('File has been uploaded');
+
+app.post('/upload', upload.single('image'), (req, res) => {
+  res.status(200).json('Image uploaded!');
 });
 
 // Catch error 404 and forward to error handler

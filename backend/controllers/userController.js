@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -5,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // Import JWT secret
-const { JWT_SECRET, SECRET_NAME, SECRET_ROLE } = process.env;
+const { JWT_SECRET } = process.env;
 
 // Generate JWT
 const generateToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: '30d' });
@@ -119,35 +120,23 @@ exports.loginUser = async (req, res) => {
 };
 
 // Update User info // PUT // ADMIN ONLY
-// exports.updateUser = async (req, res) => {
-//   const { account } = req.params;
-//   const { username } = req.user;
-//   const { first_name, last_name, email } = req.body;
-
-//   const user = await User.findOne({ username: account });
-//   console.log(user.id);
-
-//   if (user) {
-//     const updatedUser = await User.findByIdAndUpdate(user.id, {
-//       first_name, last_name,
-//     }, { new: true });
-//     res.status(200).json(updatedUser);
-//   } else {
-//     res.status(400);
-//     throw new Error('User not found');
-//   }
-// };
-
-// Update Category // PUT // ADMIN ONLY
-// exports.updateCategory = async (req, res) => {
 exports.updateUser = async (req, res) => {
   const { account } = req.params;
-  const { firstName, lastName } = req.body;
+  const username = req.body.username.toLowerCase();
+  const {
+    first_name, last_name, profilePic, email,
+  } = req.body;
 
   const user = await User.findOne({ username: account });
 
   if (user) {
-    const updatedUser = await User.findByIdAndUpdate(user.id, { first_name: firstName, last_name: lastName }, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(
+      user.id,
+      {
+        first_name, last_name, profilePic, username, email,
+      },
+      { new: true },
+    ).select('-password');
     res.status(200).json(updatedUser);
   } else {
     res.status(400);
@@ -159,7 +148,7 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   const { account } = req.params;
 
-  const user = await User.findOne({ username: account });
+  const user = await User.findOne({ account });
 
   if (!user) {
     res.status(400);

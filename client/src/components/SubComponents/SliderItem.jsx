@@ -4,14 +4,15 @@ import topic_3 from '../../assets/images/topic-3.png';
 
 const SliderItem = ({
   category: {
-    name, img,
+    name, image,
   },
 }) => {
   const [categoryData, setCategoryData] = useState([]);
 
+  const imgPath = 'http://localhost:5000/images/Categories/';
+
   useEffect(() => {
     const getCategoryData = async () => {
-      // const response = await axios.get('http://localhost:5000/categories');
       const response = await axios.get(`http://localhost:5000/posts/${name}/posts`);
       setCategoryData(response.data);
     };
@@ -25,7 +26,8 @@ const SliderItem = ({
       <a href={`/categories/${name}`} className="slider-card">
         <figure className="slider-banner img-holder">
           <img
-            src={topic_3}
+            // src={topic_3}
+            src={imgPath + image}
             width="507"
             height="618"
             loading="lazy"

@@ -79,7 +79,7 @@ exports.showOnePost = async (req, res) => {
 // Create Post // POST
 exports.createPost = async (req, res) => {
   const {
-    title, content, category,
+    title, content, category, image,
   } = req.body;
 
   const { username } = req.user;
@@ -113,6 +113,7 @@ exports.createPost = async (req, res) => {
     content,
     category: categoryIds,
     slug,
+    image,
   });
 
   res.status(200).json(post);
@@ -121,19 +122,37 @@ exports.createPost = async (req, res) => {
 // Update Post // PUT
 exports.updatePost = async (req, res) => {
   const { slug } = req.params;
-  const { username } = req.user;
-  const { title, content, categories } = req.body;
+  const {
+    title, content, category, image,
+  } = req.body;
 
   const post = await Post.findOne({ slug });
+  const categoryIds = [];
+
+  if (category) {
+    const cat = category?.split(', ');
+    console.log(cat);
+
+    const postCategory = await Category.find({ name: { $in: cat } });
+    postCategory.forEach((category) => categoryIds.push(category.id));
+  }
+
+  let slugged;
+
+  if (title) {
+    // generate slug
+    slugged = slugify(title, { remove: /[*+~.()'"!:@]/g, lower: true });
+  }
 
   if (post) {
     const updatedPost = await Post.findByIdAndUpdate(post.id, {
-      title, content, categories, username,
+      title, content, category: categoryIds, image, slug: slugged,
     }, { new: true });
     res.status(200).json(updatedPost);
+  } else {
+    res.status(400);
+    throw new Error('Post not found');
   }
-  res.status(400);
-  throw new Error('Post not found');
 };
 
 // Delete Post // DELETE

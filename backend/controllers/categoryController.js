@@ -4,12 +4,9 @@ const slugify = require('slugify');
 const Category = require('../models/Category');
 const Post = require('../models/Post');
 
-// Import Secrets
-const { SECRET_NAME, SECRET_ROLE } = process.env;
-
 // Display all categories // GET
 exports.showCategories = async (req, res) => {
-  const categories = await Category.find({}, 'name').sort({ name: 1 });
+  const categories = await Category.find({}, 'name image').sort({ name: 1 });
   if (categories.length < 1) {
     res.status(400);
     throw new Error('No Categories to display');
@@ -22,7 +19,7 @@ exports.showCategories = async (req, res) => {
 exports.showOneCategory = async (req, res) => {
   const { categoryName } = req.params;
 
-  const category = await Category.findOne({ name: categoryName }, 'name').sort({ name: 1 });
+  const category = await Category.findOne({ name: categoryName }, 'name image').sort({ name: 1 });
 
   // Check if category exists
   if (!category) {
@@ -30,19 +27,14 @@ exports.showOneCategory = async (req, res) => {
     throw new Error('Category not found');
   }
 
-  const categoryPosts = await Post.find({ category: category.id }).populate('category', 'name');
+  const categoryPosts = await Post.find({ category: category.id }).populate('category', 'name image');
   if (category && categoryPosts) return res.status(200).json({ category, categoryPosts });
 };
 
 // Create Category // POST
 exports.createCategory = async (req, res) => {
   const { username, role } = req.user;
-  const { name } = req.body;
-
-  if ((role !== SECRET_ROLE) && (username !== SECRET_NAME)) {
-    res.status(401);
-    throw new Error('Not authorized');
-  }
+  const { name, image } = req.body;
 
   // Check if all fields are filled out
   if (!name) {
@@ -60,12 +52,13 @@ exports.createCategory = async (req, res) => {
     throw new Error('Category already registered');
   }
 
-  const category = await Category.create({ name: sluggedName });
+  const category = await Category.create({ name: sluggedName, image });
   res.status(200).json(category);
 };
 
 // Update Category // PUT // ADMIN ONLY
 exports.updateCategory = async (req, res) => {
+  const { image } = req.body;
   const name = req.body.name.toLowerCase();
   const categoryName = req.params.categoryName.toLowerCase();
 
@@ -74,7 +67,11 @@ exports.updateCategory = async (req, res) => {
 
   const category = await Category.findOne({ name: categoryName });
   if (category) {
-    const updatedCategory = await Category.findByIdAndUpdate(category.id, { name: sluggedName }, { new: true });
+    const updatedCategory = await Category.findByIdAndUpdate(
+      category.id,
+      { name: sluggedName, image },
+      { new: true },
+    ).select('name image');
     res.status(200).json(updatedCategory);
   } else {
     res.status(400);

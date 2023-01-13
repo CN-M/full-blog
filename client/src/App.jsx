@@ -22,7 +22,7 @@ function App() {
         <Route path="/sign-up" element={<Register />} />
         <Route path="/write" element={<Write />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/posts/:postid" element={<SinglePost />} />
+        <Route path="/posts/:postslug" element={<SinglePost />} />
       </Routes>
       {/* <Footer /> */}
     </Router>
