@@ -1,95 +1,73 @@
-/* eslint-disable jsx-a11y/no-autofocus */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable react/button-has-type */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-// import { Context } from '../../context/Context';
 import './SinglePost.scss';
+import axios from 'axios';
 
-export default function SinglePost() {
+import { useEffect, useState } from 'react';
+
+const SinglePost = () => {
   const path = window.location.pathname.split('/')[2];
-  const imgPath = 'http://localhost:5000/images/Posts/Featured/';
 
-  console.log(path);
-
-  const [updateMode, setUpdateMode] = useState(false);
+  const [categoryData, setCategoryData] = useState([]);
   const [postData, setPostData] = useState([]);
+  const [title, setTitle] = useState('');
+  const [image, setimage] = useState('');
+  const [content, setContent] = useState('');
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     const getPostData = async () => {
       const response = await axios.get(`http://localhost:5000/posts/${path}`);
       setPostData(response.data);
-      console.log(response.data);
+      setTitle(response.data.title);
+      setimage(response.data.image);
+      setContent(response.data.content);
+      setUsername(response.data.username.first_name);
     };
 
     getPostData();
-  });
+  }, []);
 
-  const {
-    title, category, slug, image,
-    username,
-    createdAt, content, _id,
-  } = postData;
+  const imgPath = 'http://localhost:5000/images/Posts/Featured/';
 
-  const postDate = new Date(createdAt);
-  const datePosted = postDate.toUTCString().split(', ')[1].split(' ').slice(0, 3).join(' ');
+  // const postDate = new Date(createdAt);
+  // const datePosted = postDate.toUTCString().split(', ')[1].split(' ').slice(0, 3).join(' ');
 
-  // const handleDelete = async () => {
-  //   try {
-  //     await axios.delete(`/posts/${post._id}`, {
-  //       data: { username: user.username },
-  //     });
-  //     window.location.replace('/');
-  //   } catch (err) {}
-  // };
+  // if (postData) {
+  //   const {
+  //     title, category, slug, image, content,
+  //     username: {
+  //       username, first_name, last_name,
+  //     },
+  //   } = postData;
 
-  // const handleUpdate = async () => {
-  //   try {
-  //     await axios.put(`/posts/${post._id}`, {
-  //       username: user.username,
-  //       title,
-  //       desc,
-  //     });
-  //     setUpdateMode(false);
-  //   } catch (err) {}
-  // };
+  //   console.log(title);
+  // }
 
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        {
-        }
-
+        {image && (
+          <img src={imgPath + image} alt={title} className="singlePostImg" />
+        )}
         <input
           type="text"
           value={title}
           className="singlePostTitleInput"
-          autoFocus
+          // autoFocus
+          onChange={(e) => setTitle(e.target.value)}
         />
         <h1 className="singlePostTitle">
           {title}
-          <div className="singlePostEdit">
-            <i
-              className="singlePostIcon far fa-edit"
-              onClick={() => setUpdateMode(true)}
-            />
-            <i
-              className="singlePostIcon far fa-trash-alt"
-            />
-          </div>
         </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
             Author:
-            <Link to={`/?user=${username}`} className="link">
-              <b> {first_name + last_name}</b>
-            </Link>
+            <a to={`/?user=${username}`} className="link">
+              <b> {username}</b>
+            </a>
           </span>
           <span className="singlePostDate">
-            {datePosted}
+            {/* {new Date(post.createdAt).toDateString()} */}
+            2012
           </span>
         </div>
         <textarea
@@ -98,11 +76,13 @@ export default function SinglePost() {
           // onChange={(e) => setDesc(e.target.value)}
         />
         <p className="singlePostDesc">{content}</p>
-        <button className="singlePostButton">
-          {/* <button className="singlePostButton" onClick={handleUpdate}> */}
+        {/* <button className="singlePostButton" onClick={handleUpdate}> */}
+        {/* <button className="singlePostButton">
           Update
-        </button>
+        </button> */}
       </div>
     </div>
   );
-}
+};
+
+export default SinglePost;
