@@ -18,7 +18,7 @@ const LatestPost = ({ postData }) => (
     </p>
     <ul className="grid-list">
       {
-        postData.slice(0, 11)?.map((object, i) => (
+        postData.slice(0, 10)?.map((object, i) => (
           <ContentCard post={object} key={object._id} />
         ))
       }

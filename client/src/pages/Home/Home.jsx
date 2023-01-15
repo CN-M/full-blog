@@ -48,8 +48,8 @@ const Home = () => {
               <LatestPost postData={postData} />
               <div className="post-aside grid-list">
                 <PostsBar postData={postData} />
-                <LatestComment />
-                <InstagramBar />
+                {/* <LatestComment /> */}
+                {/* <InstagramBar /> */}
               </div>
             </div>
           </section>
