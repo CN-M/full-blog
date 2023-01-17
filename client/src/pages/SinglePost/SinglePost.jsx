@@ -23,7 +23,6 @@ const SinglePost = () => {
   useEffect(() => {
     const getPostData = async () => {
       const response = await axios.get(`http://localhost:5000/posts/${path}`);
-      const {}
       setPostData(response.data);
       setTitle(response.data.title);
       setimage(response.data.image);
