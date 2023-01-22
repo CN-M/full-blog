@@ -50,45 +50,36 @@ const SinglePost = () => {
   // }
 
   return (
-    <div className="singlePost">
-      <div className="singlePostWrapper">
-        {image && (
-          <img src={imgPath + image} alt={title} className="singlePostImg" />
-        )}
-        <input
-          type="text"
-          value={title}
-          className="singlePostTitleInput"
-          // autoFocus
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <h1 className="singlePostTitle">
-          {title}
-        </h1>
-        <div className="singlePostInfo">
-          <span className="singlePostAuthor">
-            Author:
-            <a to={`/?user=${username}`} className="link">
-              <b> {username}</b>
-            </a>
-          </span>
-          <span className="singlePostDate">
-            {/* {new Date(post.createdAt).toDateString()} */}
-            2012
-          </span>
-        </div>
-        <textarea
-          className="singlePostDescInput"
-          value={content}
-          // onChange={(e) => setDesc(e.target.value)}
-        />
-        <p className="singlePostDesc">{content}</p>
-        {/* <button className="singlePostButton" onClick={handleUpdate}> */}
-        {/* <button className="singlePostButton">
-          Update
-        </button> */}
+    <>
+      <nav className="navbar">
+        <img src="img/logo.png" className="logo" alt="" />
+        <ul className="links-container">
+          <li className="link-item"><a href="/" className="link">home</a></li>
+          <li className="link-item"><a href="/editor" className="link">editor</a></li>
+        </ul>
+      </nav>
+
+      <div className="banner" />
+
+      <div className="blog">
+        <h1 className="title">{title}</h1>
+        <p className="published"><span>published at - </span></p>
+        <div className="article" />
       </div>
-    </div>
+
+      <h1 className="sub-heading">Read more</h1>
+
+      {/* <!-- blog section --> */}
+      <section className="blogs-section">{content}</section>
+      {/* <!-- <div class="blog-card">
+            <img src="img/header.png" class="blog-image" alt="" />
+            <h1 class="blog-title">Lorem ipsum dolor sit amet consectetur.</h1>
+            <p class="blog-overview">Lorem ipsum dolor sit amet
+            consectetur adipisicing elit.
+            Sunt incidunt fugiat quos porro repellat harum. Adipisci tempora corporis rem cum.</p>
+            <a href="/" class="btn dark">read</a>
+        </div> --> */}
+    </>
   );
 };
 

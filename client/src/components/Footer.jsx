@@ -70,19 +70,19 @@ const Footer = ({ categoryData }) => {
             <p className="copyright">&copy; { currentYear } C.N.M.</p>
             <ul className="social-list">
               <li>
-                <a href="https://twitter.com/CN_Mbhalati" className="social-link">
+                <a href="https://twitter.com/CN_Mbhalati" className="social-link" target="_blank" rel="noreferrer">
                   <ion-icon name="logo-twitter" />
                   <span className="span">Twitter</span>
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/c-n-mbhalati-a6526716a/" className="social-link">
+                <a href="https://www.linkedin.com/in/c-n-mbhalati-a6526716a/" className="social-link" target="_blank" rel="noreferrer">
                   <ion-icon name="logo-linkedin" />
                   <span className="span">LinkedIn</span>
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/c.n.mbhalati/" className="social-link">
+                <a href="https://www.instagram.com/c.n.mbhalati/" className="social-link" target="_blank" rel="noreferrer">
                   <ion-icon name="logo-instagram" />
                   <span className="span">Instagram</span>
                 </a>
