@@ -10,7 +10,9 @@ const Header = () => {
       <div className="container">
 
         <a href="/" className="logo">
-          <img src={logo} width="119" height="37" alt="Wren logo" />
+          {/* <img src={logo} width="119" height="37" alt="Wren logo" /> */}
+          {/* <span className="span">C.N.</span> */}
+          <h1 className="headline headline-3 section-title"><span className="span">C.N.M.</span></h1>
         </a>
 
         <nav className="navbar" data-navbar>

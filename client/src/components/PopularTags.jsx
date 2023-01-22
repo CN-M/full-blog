@@ -48,10 +48,10 @@ const PopularTags = ({ categoryData }) => (
         </li>
 
         {
-                categoryData.map((object, i) => (
-                  <TagButton category={object} key={object._id} />
-                ))
-              }
+            categoryData.map((object, i) => (
+              <TagButton category={object} key={object._id} />
+            ))
+          }
 
         <li>
           <button className="card tag-btn">

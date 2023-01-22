@@ -11,16 +11,23 @@ const Hero = () => (
     <div className="container">
       <div className="hero-content">
         <p className="hero-subtitle">Hey, Welcome to the Blog</p>
-        <h1 className="headline headline-1 section-title">I&apos;m <span className="span">C.N.</span></h1>
-        <p className="hero-text">
-          I write sometimes.
-        </p>
-        <p className="hero-text">
-          And that&apos;s about it. Stick around to read my ramblings.
-        </p>
-        <p className="hero-text last">
-          {/* Stick around to read my ramblings. */}
-        </p>
+        <h1 className="headline headline-1 section-title">My Name Is <span className="span">C.N.</span></h1>
+        <h3 className="hero-text">
+          I&apos;m a software engineer and writer.
+        </h3>
+        <h3 className="hero-text">
+          I&apos;m also a bit of an idiot.
+        </h3>
+        <h3 className="hero-text">
+          I have this tendency of overthinking things and
+          making them needlessly complicated.
+        </h3>
+        <h3 className="hero-text last">
+          Writing helps me think things through in a far less convoluted way.
+        </h3>
+        <h3 className="hero-text last">
+          Stick around to read the half baked ramblings of a delusional man.
+        </h3>
         {/* <div className="input-wrapper">
 
           <input
@@ -40,9 +47,9 @@ const Hero = () => (
 
         </div> */}
 
-      </div>
+        {/* </div> */}
 
-      <div className="hero-banner">
+        {/* <div className="hero-banner"> */}
 
         {/* <img src={hero_banner} width="327" height="490" alt="banner" className="w-100" /> */}
 

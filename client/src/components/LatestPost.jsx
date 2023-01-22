@@ -14,7 +14,7 @@ const LatestPost = ({ postData }) => (
       <span className="span">Recent posts</span>
     </h2>
     <p className="section-text">
-      Don&apos;t miss the latest trends
+      Read my latest stuff
     </p>
     <ul className="grid-list">
       {
