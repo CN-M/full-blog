@@ -11,11 +11,15 @@ const Hero = () => (
     <div className="container">
       <div className="hero-content">
         <p className="hero-subtitle">Hey, Welcome to the Blog</p>
-        <h1 className="headline headline-1 section-title">I’m <span className="span">C.N.</span></h1>
+        <h1 className="headline headline-1 section-title">I&apos;m <span className="span">C.N.</span></h1>
         <p className="hero-text">
-          I use animation as a third dimension by which
-          to simplify experiences and kuiding thro each and every
-          interaction. I’m not adding motion just to spruce things up, but doing it in ways that.
+          I write sometimes.
+        </p>
+        <p className="hero-text">
+          And that&apos;s about it. Stick around to read my ramblings.
+        </p>
+        <p className="hero-text last">
+          {/* Stick around to read my ramblings. */}
         </p>
         {/* <div className="input-wrapper">
 

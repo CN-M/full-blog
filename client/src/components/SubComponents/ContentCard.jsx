@@ -15,7 +15,8 @@ const ContentCard = ({
 
   return (
     <li>
-      <div className="recent-post-card">
+      {/* <div className="recent-post-card"> */}
+      <a href={`/posts/${slug}`} className="recent-post-card">
         <figure className="card-banner img-holder">
           <img
             src={image ? imgPath + image : recent_post_3}
@@ -47,17 +48,18 @@ const ContentCard = ({
           </p>
           <div className="card-wrapper">
             <div className="profile-card">
-              <img
+              {/* <img
                 src={author_1}
                 width="48"
                 height="48"
                 loading="lazy"
                 alt={first_name || username}
                 className="profile-banner"
-              />
+              /> */}
               <div className="name-and-date">
-                <p className="card-title">{first_name || username}</p>
-                <p className="card-subtitle">{datePosted}</p>
+                <p className="card-title">{first_name || username} • {datePosted}</p>
+                {/* <span></span> */}
+                {/* <p className="card-subtitle">{datePosted}</p> */}
               </div>
             </div>
             <div className="card-tag" />
@@ -67,7 +69,8 @@ const ContentCard = ({
             </div>
           </div>
         </div>
-      </div>
+        {/* </div> */}
+      </a>
     </li>
   );
 };

@@ -489,7 +489,13 @@
   
   .hero .section-title { margin-block: 20px; }
   
-  .hero .hero-text { margin-block-end: 40px; }
+  .hero .hero-text { margin-block-end: 5px; }
+  
+  .hero {
+    .last {
+      margin-block-end: 40px; 
+    }
+  }
   
   .hero .input-wrapper:hover { box-shadow: var(--shadow-2); }
   
@@ -750,10 +756,12 @@
     .profile-card {
       .name-and-date {
         display: flex;
-        flex-direction: column;
+        // flex-direction: column;
+        gap: 5px;
         p {
           // background-color: rebeccapurple;
           margin: 0;
+
 
         }
       }
