@@ -2,6 +2,7 @@ import './SinglePost.scss';
 import axios from 'axios';
 
 import { useEffect, useState } from 'react';
+import Header from '../../components/Header';
 
 const SinglePost = () => {
   const path = window.location.pathname.split('/')[2];
@@ -51,34 +52,31 @@ const SinglePost = () => {
 
   return (
     <>
-      <nav className="navbar">
-        <img src="img/logo.png" className="logo" alt="" />
-        <ul className="links-container">
-          <li className="link-item"><a href="/" className="link">home</a></li>
-          <li className="link-item"><a href="/editor" className="link">editor</a></li>
-        </ul>
-      </nav>
+      <Header />
+      <div className="single__body">
+        <div className="single__banner">
+          <img className="single__blog-image" src={imgPath + image} alt="" />
+        </div>
 
-      <div className="banner" />
+        <div className="single__blog">
+          <h1 className="single__title">{title}</h1>
+          <p className="single__published"><span>published at - </span></p>
+          <div className="single__article" />
+        </div>
 
-      <div className="blog">
-        <h1 className="title">{title}</h1>
-        <p className="published"><span>published at - </span></p>
-        <div className="article" />
-      </div>
+        <h1 className="single__sub-heading">Read more</h1>
 
-      <h1 className="sub-heading">Read more</h1>
-
-      {/* <!-- blog section --> */}
-      <section className="blogs-section">{content}</section>
-      {/* <!-- <div class="blog-card">
+        {/* <!-- blog section --> */}
+        <section className="single__blogs-section">{content}</section>
+        {/* <!-- <div class="blog-card">
             <img src="img/header.png" class="blog-image" alt="" />
             <h1 class="blog-title">Lorem ipsum dolor sit amet consectetur.</h1>
             <p class="blog-overview">Lorem ipsum dolor sit amet
             consectetur adipisicing elit.
             Sunt incidunt fugiat quos porro repellat harum. Adipisci tempora corporis rem cum.</p>
             <a href="/" class="btn dark">read</a>
-        </div> --> */}
+          </div> --> */}
+      </div>
     </>
   );
 };
