@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// Imporatant dependencies
+// Important dependencies
 const { PORT, NODE_ENV } = process.env;
 const { errorHandler } = require('./middleware/errorMiddleware');
 const { connectDB } = require('./config/db');

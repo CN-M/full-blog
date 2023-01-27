@@ -5,7 +5,7 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 const Category = require('../models/Category');
 
-// Display ALL posts // GET
+// Display All Posts // GET
 exports.showPosts = async (req, res) => {
   // Find ALL posts
   const posts = await Post.find({}, '-updatedAt -__v')
@@ -20,7 +20,7 @@ exports.showPosts = async (req, res) => {
   }
 };
 
-// Display all user posts // GET
+// Display All User Posts // GET
 exports.showUserPosts = async (req, res) => {
   const { user } = req.params;
 
@@ -38,7 +38,7 @@ exports.showUserPosts = async (req, res) => {
   }
 };
 
-// Display all user posts // GET
+// Display All Category Posts // GET
 exports.showPostsPerCategory = async (req, res) => {
   const { category } = req.params;
 
@@ -53,7 +53,7 @@ exports.showPostsPerCategory = async (req, res) => {
   }
 };
 
-// Display specific post // GET
+// Display Specific Post // GET
 exports.showOnePost = async (req, res) => {
   const { slug } = req.params;
   const post = await Post.findOne({ slug }, '-updatedAt -__v')

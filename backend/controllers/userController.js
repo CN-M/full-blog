@@ -11,7 +11,7 @@ const { JWT_SECRET } = process.env;
 // Generate JWT
 const generateToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: '30d' });
 
-// Display all users // GET // ADMIN ONLY
+// Display All Users // GET // ADMIN ONLY
 exports.showUsers = async (req, res) => {
   const users = await User.find({}, 'username email first_name last_name -_id');
 
@@ -23,7 +23,7 @@ exports.showUsers = async (req, res) => {
   }
 };
 
-// Show Single User // GET // ADMIN ONLY
+// Display Single User // GET // ADMIN ONLY
 exports.showSingleUser = async (req, res) => {
   const { username } = req.params;
 
@@ -91,7 +91,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-// Loign user // POST
+// Login User // POST
 exports.loginUser = async (req, res) => {
   const { password } = req.body;
 
@@ -119,7 +119,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// Update User info // PUT // ADMIN ONLY
+// Update User Info // PUT // ADMIN ONLY
 exports.updateUser = async (req, res) => {
   const { account } = req.params;
   const username = req.body.username.toLowerCase();

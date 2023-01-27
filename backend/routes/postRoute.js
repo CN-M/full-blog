@@ -1,40 +1,24 @@
 const router = require('express').Router();
 
 const {
-  showUserPosts,
-  showPostsPerCategory,
-  showPosts,
-  showOnePost,
-  createPost,
-  updatePost,
-  deletePost,
+  showUserPosts, showPostsPerCategory, showPosts, showOnePost, createPost, updatePost, deletePost,
 } = require('../controllers/postController');
 
 const {
-  showAllComments,
-  showComments,
-  createComment,
-  deleteComment,
+  showAllComments, showComments, createComment, deleteComment,
 } = require('../controllers/commentController');
 
 const {
-  showAllReplies,
-  showReplies,
-  createReply,
-  deleteReply,
+  showAllReplies, showReplies, createReply, deleteReply,
 } = require('../controllers/replyController');
 
 const { guard, protect } = require('../middleware/authMiddleware');
 
 router.route('/')
-  .get(showPosts)
+  .get(showPosts);
+
+router.route('/write')
   .post(protect, createPost);
-
-router.route('/:user/all')
-  .get(showUserPosts);
-
-router.route('/:category/posts')
-  .get(showPostsPerCategory);
 
 router.route('/:slug')
   .get(showOnePost)

@@ -4,7 +4,7 @@ const slugify = require('slugify');
 const Category = require('../models/Category');
 const Post = require('../models/Post');
 
-// Display all categories // GET
+// Display All Categories // GET
 exports.showCategories = async (req, res) => {
   const categories = await Category.find({}, 'name image').sort({ name: 1 });
   if (categories.length < 1) {
@@ -15,7 +15,7 @@ exports.showCategories = async (req, res) => {
   }
 };
 
-// Display specific category // GET
+// Display Specific Category // GET
 exports.showOneCategory = async (req, res) => {
   const { categoryName } = req.params;
 
@@ -31,7 +31,7 @@ exports.showOneCategory = async (req, res) => {
   if (category && categoryPosts) return res.status(200).json({ category, categoryPosts });
 };
 
-// Create Category // POST
+// Create Category // POST // ADMIN ONLY
 exports.createCategory = async (req, res) => {
   const { username, role } = req.user;
   const { name, image } = req.body;
@@ -79,7 +79,7 @@ exports.updateCategory = async (req, res) => {
   }
 };
 
-// Delete Category // DELETE
+// Delete Category // DELETE // ADMIN ONLY
 exports.deleteCategory = async (req, res) => {
   const categoryName = req.params.categoryName.toLowerCase();
 
