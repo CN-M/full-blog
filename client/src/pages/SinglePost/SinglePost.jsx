@@ -2,10 +2,11 @@ import './SinglePost.scss';
 import axios from 'axios';
 
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 
 const SinglePost = () => {
-  const path = window.location.pathname.split('/')[2];
+  const { slug } = useParams();
 
   const [categoryData, setCategoryData] = useState([]);
   const [postData, setPostData] = useState([]);
@@ -23,7 +24,7 @@ const SinglePost = () => {
 
   useEffect(() => {
     const getPostData = async () => {
-      const response = await axios.get(`http://localhost:5000/posts/${path}`);
+      const response = await axios.get(`http://localhost:5000/posts/${slug}`);
       setPostData(response.data);
       setTitle(response.data.title);
       setimage(response.data.image);

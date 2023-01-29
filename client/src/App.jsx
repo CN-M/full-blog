@@ -10,6 +10,7 @@ import Login from './pages/Login/Login';
 import Settings from './pages/Settings/Settings';
 import SinglePost from './pages/SinglePost/SinglePost';
 import Write from './pages/Write/Write';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/write" element={<Write />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/posts/:slug" element={<SinglePost />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
