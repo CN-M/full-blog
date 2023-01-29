@@ -1,8 +1,11 @@
 // HERO
 
-.hero-bg { display: none; }
+// .hero-bg { display: none; }
 
-.hero { padding-block-start: calc(var(--section-padding) + 160px); }
+.hero { 
+    padding-block-start: calc(var(--section-padding) + 160px); 
+    height: 100vh;
+}
 
 .hero .container {
     // display: grid;   
@@ -21,7 +24,7 @@
 
 .hero .hero-text { 
     margin-block-end: 5px; 
-    font-size: var(--fontSize-3);
+    font-size: var(--fontSize-2-5);
 }
 
 .hero {
@@ -56,7 +59,6 @@
 .hero .shape {
     position: absolute;
     z-index: -1;
-
     animation: heroDecoAnim 3s linear infinite alternate;
 }
 

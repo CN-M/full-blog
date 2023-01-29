@@ -1,9 +1,9 @@
-import './SinglePost.scss';
+// import './SinglePost.scss';
 import axios from 'axios';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../../components/Header';
+import Header from '../components/Header';
 
 const SinglePost = () => {
   const { slug } = useParams();

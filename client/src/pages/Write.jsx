@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import './Write.scss';
+// import './Write.scss';
 
 function Write() {
   return (

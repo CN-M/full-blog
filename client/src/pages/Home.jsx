@@ -1,17 +1,17 @@
 import axios from 'axios';
 
 import { useEffect, useState } from 'react';
-import Header from '../../components/Header';
-import Hero from '../../components/Hero';
-import LatestPost from '../../components/LatestPost';
-import PostsBar from '../../components/PostsBar';
-import InstagramBar from '../../components/InstagramBar';
-import FeaturedPost from '../../components/FeaturedPost';
-import Topics from '../../components/Topics';
-import PopularTags from '../../components/PopularTags';
-import BackToTop from '../../components/BackToTop';
-import Footer from '../../components/Footer';
-import LatestComment from '../../components/LatestComments';
+import Header from '../components/Header';
+import Hero from '../components/Hero';
+import LatestPost from '../components/LatestPost';
+import PostsBar from '../components/PostsBar';
+import InstagramBar from '../components/InstagramBar';
+import FeaturedPost from '../components/FeaturedPost';
+import Topics from '../components/Topics';
+import PopularTags from '../components/PopularTags';
+import BackToTop from '../components/BackToTop';
+import Footer from '../components/Footer';
+import LatestComment from '../components/LatestComments';
 
 const Home = () => {
   const [postData, setPostData] = useState([]);
