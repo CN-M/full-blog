@@ -1,6 +1,3 @@
-/* eslint-disable react/style-prop-object */
-/* eslint-disable react/button-has-type */
-
 import { Link } from 'react-router-dom';
 
 import recent_post_1 from '../assets/images/recent-post-1.jpg';

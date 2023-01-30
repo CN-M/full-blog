@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-/* eslint-disable react/button-has-type */
 import tag_6 from '../../assets/images/tag6.png';
 
 const TagButton = ({

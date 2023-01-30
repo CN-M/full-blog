@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 import { Link } from 'react-router-dom';
 
 import featured_1 from '../../assets/images/featured-1.png';

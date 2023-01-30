@@ -1,4 +1,3 @@
-/* eslint-disable  */
 import popular_post_1 from '../assets/images/popular-post-1.jpg';
 import popular_post_2 from '../assets/images/popular-post-2.jpg';
 import popular_post_3 from '../assets/images/popular-post-3.jpg';

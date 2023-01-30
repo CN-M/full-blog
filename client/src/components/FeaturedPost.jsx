@@ -1,18 +1,11 @@
-/* eslint-disable react/style-prop-object */
-/* eslint-disable react/button-has-type */
-
 import { Link } from 'react-router-dom';
 
 import featured_1 from '../assets/images/featured-1.png';
 import author_1 from '../assets/images/author-1.png';
 import featured_2 from '../assets/images/featured-2.png';
-// import author_1 from "../assets/images/author-1.png"
 import featured_3 from '../assets/images/featured-3.png';
-// import author_1 from "../assets/images/author-1.png"
 import featured_4 from '../assets/images/featured-4.png';
-// import author_1 from "../assets/images/author-1.png"
 import featured_5 from '../assets/images/featured-5.png';
-// import author_1 from "../assets/images/author-1.png"
 import shadow_3 from '../assets/images/shadow-3.svg';
 
 import FeatureCard from './SubComponents/FeatureCard';

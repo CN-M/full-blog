@@ -1,6 +1,3 @@
-/* eslint-disable react/style-prop-object */
-/* eslint-disable react/button-has-type */
-
 import { Link } from 'react-router-dom';
 
 import logo from '../assets/images/logo.svg';

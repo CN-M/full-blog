@@ -1,5 +1,3 @@
-/* eslint-disable react/button-has-type */
-
 import { Link } from 'react-router-dom';
 
 // import hero_banner from '../assets/images/hero-banner.png';

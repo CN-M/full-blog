@@ -1,8 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/style-prop-object */
-/* eslint-disable react/button-has-type */
-
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -99,11 +94,11 @@ const Topics = ({ categoryData }) => {
             </p>
 
             <div className="btn-group">
-              <button className="btn-icon" aria-label="previous" data-slider-prev>
+              <button type="button" className="btn-icon" aria-label="previous" data-slider-prev>
                 <ion-icon name="arrow-back" aria-hidden="true" />
               </button>
 
-              <button className="btn-icon" aria-label="next" data-slider-next>
+              <button type="button" className="btn-icon" aria-label="next" data-slider-next>
                 <ion-icon name="arrow-forward" aria-hidden="true" />
               </button>
             </div>

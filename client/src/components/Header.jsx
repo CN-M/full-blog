@@ -1,23 +1,13 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable react/button-has-type */
-
 import { Link } from 'react-router-dom';
 
-import { useEffect } from 'react';
-import logo from '../assets/images/logo.svg';
+import { useEffect, useState } from 'react';
 import author_1 from '../assets/images/author-1.png';
 
 const Header = () => {
+  const user = false;
+  const [navActive, setNavActive] = useState(false);
+
   useEffect(() => {
-  // Add event listener on multiple elements
-
-    const addEventOnElements = (elements, eventType, callback) => {
-    // function addEventOnElements(elements, eventType, callback) {
-      for (let i = 0, len = elements.length; i < len; i++) {
-        elements[i].addEventListener(eventType, callback);
-      }
-    };
-
     //  HEADER ANIMATION
     //  When scrolled donw to 100px header will be active
 
@@ -33,30 +23,15 @@ const Header = () => {
         backTopBtn.classList.remove('active');
       }
     });
-
-    /**
- * MOBILE NAVBAR TOGGLER
- */
-
-    const navbar = document.querySelector('[data-navbar]');
-    const navTogglers = document.querySelectorAll('[data-nav-toggler]');
-
-    const toggleNav = () => {
-      navbar.classList.toggle('active');
-      document.body.classList.toggle('nav-active');
-    };
-
-    addEventOnElements(navTogglers, 'click', toggleNav);
-    console.log('yes');
   });
 
-  const navbar = document.querySelector('[data-navbar]');
-  const navTogglers = document.querySelectorAll('[data-nav-toggler]');
+  const navClasses = `navbar ${navActive ? 'active' : ''}`;
+
+  const body = document.getElementsByTagName('body')[0];
 
   const toggleNavbar = () => {
-    navbar.classList.toggle('active');
-    document.body.classList.toggle('nav-active');
-    console.log('tpggle');
+    setNavActive((current) => !current);
+    body.classList.toggle('nav-active');
   };
 
   const currentYear = new Date().getFullYear();
@@ -70,13 +45,15 @@ const Header = () => {
           <h1 className="headline headline-3 section-title"><span className="span">C.N.M.</span></h1>
         </Link>
 
-        <nav className="navbar" data-navbar>
+        {/* <nav className="navbar" data-navbar> */}
+        <nav className={navClasses} data-navbar>
           <div className="navbar-top">
             <Link to="/" className="logo">
-              <img src={logo} width="119" height="37" alt="Wren logo" />
+              {/* <img src={logo} width="119" height="37" alt="Wren logo" /> */}
+              <h1 className="headline headline-3 section-title"><span className="span">C.N.M.</span></h1>
             </Link>
 
-            <button onClick={toggleNavbar} className="nav-close-btn" aria-label="close menu" data-nav-toggler>
+            <button type="button" onClick={toggleNavbar} className="nav-close-btn" aria-label="close menu" data-nav-toggler>
               <ion-icon name="close-outline" aria-hidden="true" />
             </button>
           </div>
@@ -99,43 +76,46 @@ const Header = () => {
           </li> */}
           </ul>
 
-          <div className="navbar-bottom">
-            <div className="profile-card">
-              <img src={author_1} width="48" height="48" alt="Steven" className="profile-banner" />
-              <div>
-                <p className="card-title">Hello Steven !</p>
-                <p className="card-subtitle">
-                  You have 3 new messages
-                </p>
+          {
+              user && (
+              <div className="navbar-bottom">
+                <div className="profile-card">
+                  <img src={author_1} width="48" height="48" alt="Steven" className="profile-banner" />
+                  <div>
+                    <p className="card-title">Hello Steven !</p>
+                    <p className="card-subtitle">
+                      You have 3 new messages
+                    </p>
+                  </div>
+                </div>
+                <ul className="link-list">
+                  <li>
+                    <Link to="/" className="navbar-bottom-link hover-1">Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/" className="navbar-bottom-link hover-1">Articles Saved</Link>
+                  </li>
+                  <li>
+                    <Link to="/" className="navbar-bottom-link hover-1">Add New Post</Link>
+                  </li>
+                  <li>
+                    <Link to="/" className="navbar-bottom-link hover-1">My Likes</Link>
+                  </li>
+                  <li>
+                    <Link to="/" className="navbar-bottom-link hover-1">Account Setting</Link>
+                  </li>
+                  <li>
+                    <Link to="/" className="navbar-bottom-link hover-1">Sign Out</Link>
+                  </li>
+                </ul>
               </div>
-            </div>
-
-            <ul className="link-list">
-              <li>
-                <Link to="/" className="navbar-bottom-link hover-1">Profile</Link>
-              </li>
-              <li>
-                <Link to="/" className="navbar-bottom-link hover-1">Articles Saved</Link>
-              </li>
-              <li>
-                <Link to="/" className="navbar-bottom-link hover-1">Add New Post</Link>
-              </li>
-              <li>
-                <Link to="/" className="navbar-bottom-link hover-1">My Likes</Link>
-              </li>
-              <li>
-                <Link to="/" className="navbar-bottom-link hover-1">Account Setting</Link>
-              </li>
-              <li>
-                <Link to="/" className="navbar-bottom-link hover-1">Sign Out</Link>
-              </li>
-            </ul>
-          </div>
-          <p className="copyright-text">&copy;{ currentYear } C.N.M.</p>
+              )
+        }
+          {/* <p className="copyright-text">&copy; { currentYear } C.N.M.</p> */}
         </nav>
         {/* <Link to="/" className="btn btn-primary">Subscribe</Link> */}
         <div className="div" />
-        <button className="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <button type="button" onClick={toggleNavbar} className="nav-open-btn" aria-label="open menu" data-nav-toggler>
           <ion-icon name="menu-outline" aria-hidden="true" />
         </button>
       </div>

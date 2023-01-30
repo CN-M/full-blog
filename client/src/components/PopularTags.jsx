@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable camelcase */
 /* eslint-disable react/style-prop-object */
 /* eslint-disable react/button-has-type */

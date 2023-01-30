@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import { Link } from 'react-router-dom';
 
 import author_1 from '../../assets/images/author-1.png';
