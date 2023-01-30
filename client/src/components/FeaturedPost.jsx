@@ -30,10 +30,10 @@ const FeaturedPost = ({ postData }) => (
           }
       </ul>
 
-      <Link to="/posts/all" className="btn btn-secondary">
+      {/* <Link to="/posts/all" className="btn btn-secondary">
         <span className="span">Show More Posts</span>
         <ion-icon name="arrow-forward" aria-hidden="true" />
-      </Link>
+      </Link> */}
     </div>
     <img src={shadow_3} width="500" height="1500" loading="lazy" alt="" className="feature-bg" />
   </section>
