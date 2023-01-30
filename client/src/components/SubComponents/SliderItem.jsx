@@ -14,7 +14,7 @@ const SliderItem = ({
 
   useEffect(() => {
     const getCategoryData = async () => {
-      const response = await axios.get(`http://localhost:5000/posts/${name}/posts`);
+      const response = await axios.get(`http://localhost:5000/categories/${name}`);
       setCategoryData(response.data);
     };
 
@@ -27,7 +27,6 @@ const SliderItem = ({
       <Link to={`/categories/${name}`} className="slider-card">
         <figure className="slider-banner img-holder">
           <img
-            // src={topic_3}
             src={imgPath + image}
             width="507"
             height="618"
@@ -38,7 +37,11 @@ const SliderItem = ({
         </figure>
         <div className="slider-content">
           <span className="slider-title">{name}</span>
-          <p className="slider-subtitle">{categoryData.length ? '0' : categoryData.length} Articles</p>
+          {
+            categoryData.length === 1
+              ? <p className="slider-subtitle">{categoryData.length} Article</p>
+              : <p className="slider-subtitle">{categoryData.length} Articles</p>
+          }
         </div>
       </Link>
     </li>

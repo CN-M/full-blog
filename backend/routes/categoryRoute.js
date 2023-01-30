@@ -12,7 +12,7 @@ router.route('/')
   .get(showCategories)
   .post(guard, createCategory);
 
-router.route('/:categoryName')
+router.route('/:category')
   .get(showPostsPerCategory)
   .put(guard, updateCategory)
   .delete(guard, deleteCategory);

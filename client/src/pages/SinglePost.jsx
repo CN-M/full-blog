@@ -1,5 +1,6 @@
-// import './SinglePost.scss';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -12,6 +13,7 @@ const SinglePost = () => {
   const [postData, setPostData] = useState([]);
   const [title, setTitle] = useState('');
   const [image, setimage] = useState('');
+  const [createdAt, setCreatedAt] = useState('');
   const [content, setContent] = useState('');
   const [username, setUsername] = useState('');
 
@@ -29,6 +31,9 @@ const SinglePost = () => {
       setTitle(response.data.title);
       setimage(response.data.image);
       setContent(response.data.content);
+      const postDate = new Date(response.data.createdAt);
+      const dateCreated = postDate.toUTCString().split(', ')[1].split(' ').slice(0, 3).join(' ');
+      setCreatedAt(dateCreated);
       setUsername(response.data.username.first_name);
     };
 
@@ -50,33 +55,45 @@ const SinglePost = () => {
 
   //   console.log(title);
   // }
+  const markdown = `A paragraph with *emphasis* and **strong importance**.
+
+  > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
+
+  # A Heading
+  ## A Heading
+  #### A Heading
+  ##### A Heading
+
+  * Lists
+  * [ ] todo
+  * [x] done
+
+  A table:
+
+  | a | b |
+  | - | - |
+  `;
 
   return (
     <>
       <Header />
-      <div className="single__body">
+      <div className="single__container">
         <div className="single__banner">
-          <img className="single__blog-image" src={imgPath + image} alt="" />
+          <img className="single__blog-image" src={imgPath + image} alt={title} />
         </div>
-
-        <div className="single__blog">
-          <h1 className="single__title">{title}</h1>
-          <p className="single__published"><span>published at - </span></p>
-          <div className="single__article" />
-        </div>
-
-        <h1 className="single__sub-heading">Read more</h1>
-
-        {/* <!-- blog section --> */}
-        <section className="single__blogs-section">{content}</section>
-        {/* <!-- <div class="blog-card">
-            <img src="img/header.png" class="blog-image" alt="" />
-            <h1 class="blog-title">Lorem ipsum dolor sit amet consectetur.</h1>
-            <p class="blog-overview">Lorem ipsum dolor sit amet
-            consectetur adipisicing elit.
-            Sunt incidunt fugiat quos porro repellat harum. Adipisci tempora corporis rem cum.</p>
-            <a href="/" class="btn dark">read</a>
-          </div> --> */}
+        <section>
+          <h1>{title}</h1>
+          <hr />
+          <h3 className="date">{createdAt}</h3>
+          <br />
+          <div className="content">
+            <ReactMarkdown remarkPlugins={{ remarkGfm }}>
+              {/* {content} */}
+              {/* # Welcome to the thunder dome! */}
+              {markdown}
+            </ReactMarkdown>
+          </div>
+        </section>
       </div>
     </>
   );

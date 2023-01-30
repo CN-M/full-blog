@@ -12,10 +12,7 @@ import SliderItem from './SubComponents/SliderItem';
 
 const Topics = ({ categoryData }) => {
   useEffect(() => {
-    /**
- * SLIDER
- */
-
+    // SLIDER
     const slider = document.querySelector('[data-slider]');
     const sliderContainer = document.querySelector('[data-slider-container]');
     const sliderPrevBtn = document.querySelector('[data-slider-prev]');
@@ -26,16 +23,11 @@ const Topics = ({ categoryData }) => {
 
     let currentSlidePos = 0;
 
-    // const moveSliderItem = function () {
     const moveSliderItem = () => {
       sliderContainer.style.transform = `translateX(-${sliderContainer.children[currentSlidePos].offsetLeft}px)`;
     };
 
-    /**
- * NEXT SLIDE
- */
-
-    // const slideNext = function () {
+    // NEXT SLIDE
     const slideNext = () => {
       const slideEnd = currentSlidePos >= totalSlidableItems;
 
@@ -50,10 +42,7 @@ const Topics = ({ categoryData }) => {
 
     sliderNextBtn.addEventListener('click', slideNext);
 
-    /**
- * PREVIOUS SLIDE
- */
-
+    // PREVIOUS SLIDE
     const slidePrev = () => {
       if (currentSlidePos <= 0) {
         currentSlidePos = totalSlidableItems;
@@ -66,9 +55,7 @@ const Topics = ({ categoryData }) => {
 
     sliderPrevBtn.addEventListener('click', slidePrev);
 
-    /**
- * RESPONSIVE
- */
+    // RESPONSIVE
     window.addEventListener('resize', () => {
       totalSliderVisibleItems = Number(getComputedStyle(slider).getPropertyValue('--slider-items'));
       totalSlidableItems = sliderContainer.childElementCount - totalSliderVisibleItems;

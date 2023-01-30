@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&display=swap');
 // Base
 
 *,
@@ -6,6 +7,7 @@
 margin: 0;
 padding: 0;
 box-sizing: border-box;
+font-family: 'Montserrat', sans-serif;
 }
 
 li { list-style: none; }
@@ -51,7 +53,8 @@ html {
 body {
     background-color: var(--bg-oxford-blue-2);
     color: var(--text-shadow-blue);
-    font-family: var(--fontFamily-noto_sans);
+    // font-family: var(--fontFamily-noto_sans);
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.6rem;
     line-height: var(--lineHeight-4);
     overflow-y: overlay;
