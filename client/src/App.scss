@@ -12,13 +12,11 @@
 @import './src/assets/scss/components/backToTop';
 @import './src/assets/scss/components/footer';
 
-
-// Breakpoints // Responsiveness
-@import './src/assets/scss/components/breakpoints';
-
 //Pages
 @import './src/assets/scss/pages/write';
 @import './src/assets/scss/pages/singlePost';
 @import './src/assets/scss/pages/login';
 @import './src/assets/scss/pages/register';
 
+// Breakpoints // Responsiveness
+@import './src/assets/scss/components/breakpoints';

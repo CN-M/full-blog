@@ -38,9 +38,9 @@ const Home = () => {
         <article>
           <Header />
           <Hero />
-          {/* <Topics categoryData={categoryData} /> */}
-          {/* <FeaturedPost postData={postData} /> */}
-          {/* <PopularTags categoryData={categoryData} /> */}
+          <Topics categoryData={categoryData} />
+          <FeaturedPost postData={postData} />
+          <PopularTags categoryData={categoryData} />
           <section className="section recent-post" id="recent" aria-labelledby="recent-label">
             <div className="container">
               <LatestPost postData={postData} />

@@ -1,6 +1,7 @@
 import './App.scss';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // Pages
 import Home from './pages/Home';
@@ -12,6 +13,9 @@ import Write from './pages/Write';
 import NotFound from './pages/NotFound';
 
 function App() {
+  useEffect(() => {
+
+  }, []);
   return (
     <Router>
       <Routes>

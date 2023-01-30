@@ -1,6 +1,11 @@
+import Header from '../components/Header';
+
 function Settings() {
   return (
-    <div>Settings</div>
+    <>
+      <Header />
+      <div>Settings</div>
+    </>
   );
 }
 

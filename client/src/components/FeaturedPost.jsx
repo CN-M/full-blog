@@ -1,6 +1,8 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable react/button-has-type */
 
+import { Link } from 'react-router-dom';
+
 import featured_1 from '../assets/images/featured-1.png';
 import author_1 from '../assets/images/author-1.png';
 import featured_2 from '../assets/images/featured-2.png';
@@ -35,10 +37,10 @@ const FeaturedPost = ({ postData }) => (
           }
       </ul>
 
-      <a href="/posts/all" className="btn btn-secondary">
+      <Link to="/posts/all" className="btn btn-secondary">
         <span className="span">Show More Posts</span>
         <ion-icon name="arrow-forward" aria-hidden="true" />
-      </a>
+      </Link>
     </div>
     <img src={shadow_3} width="500" height="1500" loading="lazy" alt="" className="feature-bg" />
   </section>

@@ -21,6 +21,4 @@ router.route('/:account')
   .delete(guard, deleteUser)
   .put(guard, updateUser);
 
-// .get(showSingleUser, guard)
-
 module.exports = router;

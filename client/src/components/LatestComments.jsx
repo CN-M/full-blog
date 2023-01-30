@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import images_author_6 from '../assets/images/author-6.png';
 import images_author_7 from '../assets/images/author-7.png';
 import images_author_8 from '../assets/images/author-8.png';

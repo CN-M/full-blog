@@ -1,6 +1,8 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable react/button-has-type */
 
+import { Link } from 'react-router-dom';
+
 import logo from '../assets/images/logo.svg';
 
 const Footer = ({ categoryData }) => {
@@ -11,10 +13,10 @@ const Footer = ({ categoryData }) => {
         <div className="card footer">
           <div className="section footer-top">
             <div className="footer-brand">
-              <a href="/" className="logo">
+              <Link to="/" className="logo">
                 {/* <img src={logo} width="119" height="37" loading="lazy" alt="Wren logo" /> */}
                 <h1 className="headline headline-3 section-title"><span className="span">C.N.M.</span></h1>
-              </a>
+              </Link>
               <p className="footer-text">
                 When an unknown prnoto sans took
                 a galley and scrambled it to make specimen book not only five When an
@@ -31,9 +33,9 @@ const Footer = ({ categoryData }) => {
               <p className="footer-list-title">Categories</p>
               <ul>
                 {
-                  categoryData.map((category) => (
+                  categoryData.map((category, i) => (
                     <li>
-                      <a href={`/category/${category.name}`} className="footer-link hover-2">{category.name}</a>
+                      <Link to={`/category/${category.name}`} key={category._id} className="footer-link hover-2">{category.name}</Link>
                     </li>
                   ))
                 }
@@ -60,10 +62,10 @@ const Footer = ({ categoryData }) => {
                 />
                 <ion-icon name="mail-outline" aria-hidden="true" />
               </div>
-              <a href="/" className="btn btn-primary">
+              <Link to="/" className="btn btn-primary">
                 <span className="span">Subscribe</span>
                 <ion-icon name="arrow-forward" aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
           <div className="footer-bottom">

@@ -1,5 +1,7 @@
 /* eslint-disable react/button-has-type */
 
+import { Link } from 'react-router-dom';
+
 // import hero_banner from '../assets/images/hero-banner.png';
 import pattern_2 from '../assets/images/pattern-2.svg';
 import pattern_3 from '../assets/images/pattern-3.svg';
@@ -22,7 +24,7 @@ const Hero = () => (
           I have this tendency of overthinking things and
           making them needlessly complicated.
         </h3>
-        <h3 className="hero-text last">
+        <h3 className="hero-text">
           Writing helps me think things through in a far less convoluted way.
         </h3>
         <h3 className="hero-text last">

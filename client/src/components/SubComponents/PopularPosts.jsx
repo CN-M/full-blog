@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import popular_post_3 from '../../assets/images/popular-post-3.jpg';
 
 const PopularPosts = ({
@@ -22,7 +24,7 @@ const PopularPosts = ({
         </figure>
         <div className="card-content">
           <h4 className="headline headline-4 card-title">
-            <a href={`/posts/${slug}`} className="link hover-2">{title}</a>
+            <Link to={`/posts/${slug}`} className="link hover-2">{title}</Link>
           </h4>
           <div className="warpper">
             <p className="card-subtitle">15 min read</p>

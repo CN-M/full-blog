@@ -1,4 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
+import { Link } from 'react-router-dom';
+
 import author_1 from '../../assets/images/author-1.png';
 
 import recent_post_3 from '../../assets/images/recent-post-3.jpg';
@@ -15,8 +17,8 @@ const ContentCard = ({
 
   return (
     <li>
-      {/* <div className="recent-post-card"> */}
-      <a href={`/posts/${slug}`} className="recent-post-card">
+      <div href={`/posts/${slug}`} className="recent-post-card">
+        {/* <Link to={`/posts/${slug}`} className="recent-post-card"> */}
         <figure className="card-banner img-holder">
           <img
             src={image ? imgPath + image : recent_post_3}
@@ -30,18 +32,20 @@ const ContentCard = ({
         <div className="card-content">
           <div className="badge-section">
 
-            {/* <a href={`/posts/${username}/all`} className="">{first_name || username}</a> */}
-            {/* <a href={`/category/${first_name}`} className="span hover-2">{first_name}</a> */}
+            {/* <Link to={`/posts/${username}/all`} className="">{first_name || username}</Link> */}
+            {/* <Link to={`/category/${first_name}`}
+            className="span hover-2">{first_name}</Link> */}
             {
             category.map((singleCategory, i) => (
-              // <a href={`/category/${singleCategory.name}`}
-              // key={singleCategory._id} className="card-badge">#{singleCategory.name}</a>
-              <a href={`/category/${singleCategory.name}`} key={singleCategory._id} className="span hover-2">#{singleCategory.name}</a>
+              // <Link to={`/category/${singleCategory.name}`}
+              // key={singleCategory._id} className="card-badge">#{singleCategory.name}</Link>
+              <Link to={`/category/${singleCategory.name}`} key={singleCategory._id} className="span hover-2">#{singleCategory.name}</Link>
+
             ))
             }
           </div>
           <h3 className="headline headline-3 card-title">
-            <a href={`/posts/${slug}`} className="link hover-2">{title}</a>
+            <Link to={`/posts/${slug}`} className="link hover-2">{title}</Link>
           </h3>
           <p className="card-text">
             {content.slice(0, 155)}...
@@ -69,8 +73,8 @@ const ContentCard = ({
             </div>
           </div>
         </div>
-        {/* </div> */}
-      </a>
+      </div>
+      {/* </Link> */}
     </li>
   );
 };

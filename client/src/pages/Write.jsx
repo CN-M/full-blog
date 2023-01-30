@@ -1,9 +1,12 @@
 /* eslint-disable react/button-has-type */
 // import './Write.scss';
 
+import Header from '../components/Header';
+
 function Write() {
   return (
     <>
+      <Header />
       <div className="banner">
         <input type="file" accept="image/*" id="banner-upload" hidden />
         <label htmlFor="banner-upload" className="banner-upload-btn"><img src="img/upload.png" alt="upload banner" /></label>

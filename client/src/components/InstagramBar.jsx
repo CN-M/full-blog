@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import logo from '../assets/images/logo.svg';
 import insta_post_1 from '../assets/images/insta-post-1.png';
 import insta_post_2 from '../assets/images/insta-post-2.png';

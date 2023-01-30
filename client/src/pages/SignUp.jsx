@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // import './Login.scss';
 
+import { Link } from 'react-router-dom';
+
 const SignUp = () => (
   <div className="body">
 
@@ -29,7 +31,7 @@ const SignUp = () => (
             </span>
             <span>Remember Me</span>
           </label>
-          <a href="/" className="pass-rec">Forgot Password</a>
+          <Link to="/" className="pass-rec">Forgot Password</Link>
         </div>
         <div className="form-component">
           <button type="submit">Log In</button>

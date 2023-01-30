@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import topic_3 from '../../assets/images/topic-3.png';
 
 const SliderItem = ({
@@ -23,7 +24,7 @@ const SliderItem = ({
   const alt = name.replace(' ', '-').toLowerCase();
   return (
     <li className="slider-item">
-      <a href={`/categories/${name}`} className="slider-card">
+      <Link to={`/categories/${name}`} className="slider-card">
         <figure className="slider-banner img-holder">
           <img
             // src={topic_3}
@@ -37,10 +38,9 @@ const SliderItem = ({
         </figure>
         <div className="slider-content">
           <span className="slider-title">{name}</span>
-          <p className="slider-subtitle">{categoryData.length} Articles</p>
+          <p className="slider-subtitle">{categoryData.length ? '0' : categoryData.length} Articles</p>
         </div>
-
-      </a>
+      </Link>
     </li>
   );
 };
