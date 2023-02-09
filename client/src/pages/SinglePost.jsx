@@ -72,6 +72,7 @@ const SinglePost = () => {
 
   | a | b |
   | - | - |
+  
   `;
 
   return (
