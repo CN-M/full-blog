@@ -15,10 +15,11 @@ const {
 const { guard, protect } = require('../middleware/authMiddleware');
 
 router.route('/')
-  .get(showPosts);
+  .get(showPosts)
+  .post(createPost);
+// .post(protect, createPost);
 
-router.route('/write')
-  .post(protect, createPost);
+// router.route('/write')
 
 router.route('/:slug')
   .get(showOnePost)

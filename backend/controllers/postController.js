@@ -79,10 +79,10 @@ exports.showOnePost = async (req, res) => {
 // Create Post // POST
 exports.createPost = async (req, res) => {
   const {
-    title, content, category, image,
+    title, content, category, image, username,
   } = req.body;
 
-  const { username } = req.user;
+  // const { username } = req.user;
 
   // Check if all fields are filled out
   if (!title || !username || !content || !category) {

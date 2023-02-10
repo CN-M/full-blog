@@ -67,30 +67,6 @@ const SinglePost = () => {
 
   //   console.log(title);
   // }
-  const markdown = `A paragraph with *emphasis* and **strong importance**.
-  
-  > A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-  # A Heading
-  ~~A Heading~~
-  #### A Heading
-  ##### A Heading
-
-  * Lists
-  * [ ] todo
-  * [x] done
-  * 
-  
-
-  A table:
-
-  | a | b |
-  | - | - |
-  | S/N | Pet | Image |
-|--|--|--|
-| 1 | Cat |![A cat looking at you](https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=68615bab04be2077a471009ffc236509) |
-| 2 | Dog |![A dog looking at you](https://ichef.bbci.co.uk/news/976/cpsprodpb/17638/production/_124800859_gettyimages-817514614.jpg)|
-  `;
 
   return (
     <>

@@ -1,8 +1,26 @@
-/* eslint-disable react/button-has-type */
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Header from '../components/Header';
 
 function Write() {
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('Adventure');
+  const [image, setImage] = useState('featured-2.png');
+  const [content, setContent] = useState('');
+  const [username, setUsername] = useState('Jake T austin');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.post('http://localhost:5000/posts', {
+      username,
+      title,
+      content,
+      category,
+      image,
+    });
+    console.log(response);
+  };
+
   return (
     <>
       <Header />
@@ -11,16 +29,22 @@ function Write() {
         <label htmlFor="banner-upload" className="banner-upload-btn"><img src="img/upload.png" alt="upload banner" /></label>
       </div>
 
-      <div className="blog">
-        <textarea type="text" className="title" placeholder="Blog title..." />
-        <textarea type="text" className="article" placeholder="Start writing here..." />
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="blog">
+          <input type="text" id="title" onChange={(e) => setTitle(e.target.value)} value={title} className="title" placeholder="Blog title..." />
+          <textarea type="textarea" id="content" onChange={(e) => setContent(e.target.value)} className="article" placeholder="Start writing here..." />
 
-      <div className="blog-options">
-        <button type="button" className="btn dark publish-btn">publish</button>
-        <input type="file" accept="image/*" id="image-upload" hidden />
-        <label htmlFor="image-upload" className="btn grey upload-btn">Upload Image</label>
-      </div>
+          {/* <textarea type="text" id="title"
+          onChange={(e) => setTitle(e
+          .target.value)} value={title} className="title" placeholder="Blog title..." /> */}
+        </div>
+
+        <div className="blog-options">
+          <button type="submit" className="btn dark publish-btn">publish</button>
+          {/* <input type="file" accept="image/*" id="image-upload" hidden />
+          <label htmlFor="image-upload" className="btn grey upload-btn">Upload Image</label> */}
+        </div>
+      </form>
     </>
   );
 }
