@@ -1,5 +1,4 @@
 /* eslint-disable react/button-has-type */
-// import './Write.scss';
 
 import Header from '../components/Header';
 
@@ -18,7 +17,7 @@ function Write() {
       </div>
 
       <div className="blog-options">
-        <button className="btn dark publish-btn">publish</button>
+        <button type="button" className="btn dark publish-btn">publish</button>
         <input type="file" accept="image/*" id="image-upload" hidden />
         <label htmlFor="image-upload" className="btn grey upload-btn">Upload Image</label>
       </div>

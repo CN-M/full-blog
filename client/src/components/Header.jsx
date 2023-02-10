@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import author_1 from '../assets/images/author-1.png';
 
-const Header = () => {
+const Header = ({ home }) => {
   const user = false;
   const [navActive, setNavActive] = useState(false);
 
@@ -59,9 +59,19 @@ const Header = () => {
           </div>
 
           <ul className="navbar-list">
-            <li>
-              <a href="#home" className="navbar-link hover-1" data-nav-toggler>Home</a>
-            </li>
+            {
+              home
+                ? (
+                  <li>
+                    <a href="#home" className="navbar-link hover-1" data-nav-toggler>Home</a>
+                  </li>
+                )
+                : (
+                  <li>
+                    <a href="/" className="navbar-link hover-1" data-nav-toggler>Home</a>
+                  </li>
+                )
+            }
             <li>
               <a href="#topics" className="navbar-link hover-1" data-nav-toggler>Topics</a>
             </li>

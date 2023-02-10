@@ -36,7 +36,7 @@ const Home = () => {
     <div>
       <main>
         <article>
-          <Header />
+          <Header home />
           <Hero />
           <Topics categoryData={categoryData} />
           <FeaturedPost postData={postData} />
