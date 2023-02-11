@@ -18,7 +18,6 @@ function Write() {
       category,
       image,
     });
-    console.log(response);
   };
 
   return (

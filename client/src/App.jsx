@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 // Pages
 import Home from './pages/Home';
+import Count from './pages/Count';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
@@ -20,6 +21,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/count" element={<Count />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/write" element={<Write />} />
