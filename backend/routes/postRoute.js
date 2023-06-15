@@ -14,6 +14,9 @@ const {
 
 const { guard, protect } = require('../middleware/authMiddleware');
 
+router.route('/random/:category')
+  .get(showPostsPerCategory);
+
 router.route('/')
   .get(showPosts)
   .post(createPost);

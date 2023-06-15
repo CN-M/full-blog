@@ -39,7 +39,7 @@ exports.showUserPosts = async (req, res) => {
 };
 
 // Display All Category Posts // GET
-exports.showPostsPerCategory = async (req, res) => {
+exports.showPostsPerCategoryy = async (req, res) => {
   const { category } = req.params;
 
   const postCategory = await Category.findOne({ name: category });
